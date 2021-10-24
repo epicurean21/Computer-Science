@@ -510,7 +510,7 @@ Test를 진행할 때, 모든 line이 실행이 되야 Test 됐다 하는데, if
 
 - 기본적으로 help 명령어를 치면 명령어들을 볼 수 있다.
 
-  <img src="/Users/jaemincho/Desktop/JaeMinCho/4-2/오픈소스 S:W/readmeImg/pdb1.png" alt="pdb1" style="zoom:50%;" /> 
+  <img src="./readmeImg/pdb1.png" alt="pdb1" style="zoom:50%;" /> 
 
 ### Explicit Trace Point
 
