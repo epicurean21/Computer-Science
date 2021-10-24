@@ -290,7 +290,7 @@ Life is too short you need python
 
 Python 에서는 문자열을 ' '이나 " "로 감싼다. **그렇다면 문장 내에 "나 '를 출력하려면 ?**
 
-- Single Quotation mark (' ')
+- Single Quotation mark (' ') 
 
 - 문자열 내에 ' '나 " "를 포함시킬 수 있다
 
