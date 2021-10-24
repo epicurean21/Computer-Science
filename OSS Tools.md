@@ -39,7 +39,7 @@ Open Source Code를 받아서 수정하고 배포하는 범위에 따라
 
 분포로 보면 점차 Permissive 가 늘어나고있다.
 
-<img src="/Users/jaemincho/Desktop/JaeMinCho/4-2/오픈소스 S:W/readmeImg/clp.png" alt="clp" style="zoom:50%;" /> 
+<img src="./readmeImg/clp.png" alt="clp" style="zoom:50%;" /> 
 
 
 
