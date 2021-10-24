@@ -54,7 +54,7 @@
 
 - **Git의 3가지 기능** 
 
-  <img src="/Users/jaemincho/Desktop/JaeMinCho/4-2/오픈소스 S:W/readmeImg/git.png" alt="git" style="zoom:43%;" />  
+  <img src="./readmeImg/git.png" alt="git" style="zoom:43%;" />  
 
   1. **Version Control**: 버전 관리
 
