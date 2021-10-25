@@ -198,7 +198,7 @@ Open Source로 프로젝트를 진행할땐 훈수충이 많아서 Code Review �
 
 
 
-### Issue Tracking System
+### Issue Tracking System [중요 !]
 
 - 다양한 단계에서 이슈가 발생할 수 있다
   - compiler/ interpreter : syntax error
@@ -224,7 +224,7 @@ Open Source로 프로젝트를 진행할땐 훈수충이 많아서 Code Review �
 
 > 얼마나 자주 Integration을 해야하는가 ?!!
 
-**Phased** **Integration** 
+**Phased** **Integration** = [단계적인 Integration]
 
 - <u>전통적으로</u> 우리는 각 모듈을 개발하고 한 번에 통합하는 방식. [All components are integrated at the same time]
 - 한 번에 통합하고, 한 번에 테스트 및 디버깅 하는 방식
