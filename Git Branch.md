@@ -7,7 +7,7 @@ Git branch 개념을 사용하여 버전 관리를 보다 효율적으로 할 �
 - Creating Branch
 - Checking Branch Information
 - Merging Branches
-- Managing Branches
+- Managing Branches 
 
 
 
