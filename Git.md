@@ -201,8 +201,7 @@
 - Git Repository 생성을 위한 명령어
   - $ git init : git을 사용할 수 있도록 git repository를 초기화한다.
     - .git/ 레포지토리가 git repository, 숨김 폴더이고 이곳에 버전 내역이 저장된다.
-
-
+  - $ git init <폴더명>: 새로운 폴더를 만들면서 git repository를 초기화한다.
 
 ### Version Control
 
