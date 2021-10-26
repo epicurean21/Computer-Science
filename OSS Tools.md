@@ -238,7 +238,7 @@ Open Source로 프로젝트를 진행할땐 훈수충이 많아서 Code Review �
 
 
 
-**Incremental Integration**
+**Incremental Integration** = [점진적인 Integration]
 
 - Phased integration의 문제점때문에 나온 방식이다
 - **한 번에 하나의 file만 통합 !**
