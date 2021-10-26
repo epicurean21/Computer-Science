@@ -268,9 +268,9 @@ free를 지나치게 강조하다 보니, 무료라는 인식이 퍼졌음. 강�
    - 오픈소스는 보통 보는눈이 많기때문에 버그도 적고, 공개적으로 테스트 된다.
 4. 풍부한 외부 지원
    - 커뮤니티, 공식 레퍼런스를 통해 다양한 도움을 받을 수 있다.
-5. Reduces 'Vender Lock-in'
-   - Opensource s/w는 기술중립적, Vender 에 종속적인 API 등을 지양한다. 
-   - Vender Lock-in을 해결할 수 있음
+5. Reduces 'Vendor Lock-in' [vendor - 판매자, 파는사람]
+   - Opensource s/w는 기술중립적, Vendor 에 종속적인 API 등을 지양한다. 
+   - Vendor Lock-in을 해결할 수 있음
 
 **항상 맞다고 할 수는 없지만, 어느정도 정설...**
 
