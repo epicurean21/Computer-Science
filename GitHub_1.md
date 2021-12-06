@@ -33,4 +33,12 @@
 - GitHub을 통해 뭘 할 수 있을까?
   1. GitHub을 사용하면 우리가 Remote Repository 상에서 Git을 사용할 수 있다.
      - 온라인 상에서 git을 통한 버전 관리가 가능하다.
-  2. Local Repository 내용을 
+  2. Local Repository 내용을 온라인 상으로 Backup을 할 수 있다.
+     - Local Repository에 코드나, 작업 내용이 사라지더라도, Remote Repository [외부 저장공간]에 백업을 해두면 복구가 가능하다.
+  3. 협업 [Collaboration]이 가능하다
+     - Git 과 함께 사용하면 여러 협업 도구를 제공하기 때문에, default repository로 github를 사용한다.
+  4. 개인 개발 이력 [Own development history]를 남길 수 있다.
+     - 개발자가 개인 개발 이력을 관리하기 좋은 Platform이다.
+
+
+
