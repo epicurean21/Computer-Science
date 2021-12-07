@@ -1,4 +1,4 @@
-## GitHub_1
+## GitHub
 
 ### Backup with GitHub
 

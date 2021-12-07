@@ -1,6 +1,4 @@
-### Introduction to Git - [7 주차]
-
-****
+## Introduction to Git
 
 - What is Git ?
 - Git vs GitHub

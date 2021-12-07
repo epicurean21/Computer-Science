@@ -17,9 +17,17 @@
   - Backup & Collaboration
   - [GitHub](/GitHub.md)
 - NumPy
-  - What is NumPy and Why we need it
-  - ndarray 
-    - Indexing and Slicing
+  - [NumPy (I)](/NumPy(I).md)
+    - What is NumPy and Why we need it
+    - ndarray 
+      - Indexing and Slicing
+      - Fancy Indexing
   
-  - [NumPy](/NumPy.md)
+  - [NumPy (II)](/NumPy(II).md)
+    - NumPy Universial Functions
+    - Array-Otiented Programming with Array
+    - Linear Algebra
+    - Pseudorandom Number Generation
+      - example) Random Walks
   
+

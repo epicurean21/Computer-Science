@@ -1,4 +1,4 @@
-## 5주차 OSS (Open Source SW Overview)
+## OSS (Open Source SW Overview)
 
 - Software의 중요성
 - Proprietary Software
