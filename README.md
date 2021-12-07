@@ -16,4 +16,10 @@
   - Remote Repository & Local Repository
   - Backup & Collaboration
   - [GitHub](/GitHub.md)
-
+- NumPy
+  - What is NumPy and Why we need it
+  - ndarray 
+    - Indexing and Slicing
+  
+  - [NumPy](/NumPy.md)
+  
