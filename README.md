@@ -22,7 +22,6 @@
     - ndarray 
       - Indexing and Slicing
       - Fancy Indexing
-  
   - [NumPy (II)](/NumPy(II).md)
     - NumPy Universial Functions
     - Array-Otiented Programming with Array
