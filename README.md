@@ -31,16 +31,14 @@
   
 
 - Pandas
-
   - [Pandas (I)](/Pandas(I).md)
+    - What is Pandas ?
+    - Introduction to pandas Data Structures
+      - Series
+      - DataFrame
+      - Index Objects
+  - [Pandas(II)](/Pandas(II).md)
+    - Pandas Key Libraries
 
-  - What is Pandas ?
 
-  - Introduction to pandas Data Structures
-
-    - Series
-    - DataFrame
-    - Index Objects
-
-    
 
