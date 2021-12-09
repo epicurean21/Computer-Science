@@ -163,7 +163,103 @@
 
 -  누락 된 값인 NaN값을 찾는 방법
   - isnull 과 notnull 함수를 사용해서 Pandas에서 누락된 값을 찾을 수 있다.
-  - <img src="/Users/jaemincho/Desktop/JaeMinCho/4-2/오픈소스 S:W/노트/readmeImg/forAfterMidTerm/isnullnotnull.png" alt="isnullnotnull" style="zoom:50%;" />
+  - <img src="./readmeImg/forAfterMidTerm/isnullnotnull.png" alt="isnullnotnull" style="zoom:50%;" />
+  - **isnull은 NaN 값을 True로 리턴**
+  - **notnull은 NaN 값을 False로 리턴**
+  - pd.isnull() 로 사용할 수도 있고, 객체.isnull() 로도 사용할 수 있다
+
+
+
+- **Series 객체간의 산술 연산에서 인덱스 라벨을 자동 정렬해주는 기능**
+
+  - <img src="./readmeImg/forAfterMidTerm/seriesSort.png" alt="seriesSort" style="zoom:50%;" /> 
+  - 인덱스에 매칭되는 값들 끼리 연술이 된다.. !!
+
+  
+
+- **Name Attribute** [중요]
+
+  - Series 객체와, 인덱스는 name attribute를 갖고있다
+
+  - ```python
+    >>> obj4 = pd.Series([4, 6, -5, 3], index = ['A', 'C', 'E', 'F'])
+    >>> obj4
+    A    4
+    C    6
+    E   -5
+    F    3
+    dtype: int64
+    >>> obj4.name= 'population'
+    >>> obj4.index.name = 'alphabet'
+    >>> obj4
+    alphabet
+    A    4
+    C    6
+    E   -5
+    F    3
+    Name: population, dtype: int64
+    ```
+
+  - obj4.index.name 을 사용해서 인덱스에 명을 지정할 수 있고, obj에 이름을 지정해줄 수 있다.
+
+
+
+
+
+### DataFrame
+
+> excel 과 같은 spreadsheet 형태의 자료구조 !
+>
+> 직사각형의 테이블에 여러개의 컬럼이 존재하면, 서로 다른 종류의 데이터를 저장할 수 있다.
+>
+> RDB 형태와 비슷하다 - row index 와 column index 둘 다 갖고있다.
+>
+> 1차원 형태의 자료구조가 아닌, 2차원 블록에 저장이 된다 !
+
+
+
+##### DataFrame Construct [생성]
+
+- 가장 흔한 방법은, **같은 길이의 List에 담긴 Dictionary나 numpy 배열을 사용하는 것**
+
+  - ```python
+    >>> data = {'state' : ['Ohio', 'Ohio', 'Nevada', 'Nevada'], 'year' : [2000, 2001, 2000, 2002], 'pop' : [1.5, 1.7, 3.6, 2.9]}
+    >>> data
+    {'state': ['Ohio', 'Ohio', 'Nevada', 'Nevada'], 'year': [2000, 2001, 2000, 2002], 'pop': [1.5, 1.7, 3.6, 2.9]}
+    >>> frame = pd.DataFrame(data)
+    >>> frame
+        state  year  pop
+    0    Ohio  2000  1.5
+    1    Ohio  2001  1.7
+    2  Nevada  2000  3.6
+    3  Nevada  2002  2.9
+    ```
+
+  - 각 각의 row는 동일한 위치에 존재하는 각등의 쌍으로 되어있고
+
+  - column 값은 dictionary의 value로 이루어져 있다.
+
+
+
+- head method()
+  - 엄청나게 큰 데이터 프레임이 존재하면, 유용하게 사용할 수 있다.
+  - 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
