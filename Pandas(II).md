@@ -364,17 +364,252 @@
 
 
 
+### Integer Indexes
+
+- Pandas에서는 정수 인덱스를 사용할 경우, python의 list나 tuple의 정수 인덱스와 차이점이 있다.
+
+  - 주의해야한다
+
+  ```python
+  >>> ser = pd.Series(np.arange(3.))
+  >>> ser[-1] # 에러가 난다 !
+  
+  >>> ser
+  0    0.0
+  1    1.0
+  2    2.0
+  dtype: float64
+  # 정수 인덱스를 사용하라는 것인지, label 인덱스를 사용하는지 헷갈린다.
+  
+  >>> ser = pd.Series(np.arange(3.), index = ['a','b','c'])
+  >>> ser[-1]
+  2.0
+  >>> ser
+  a    0.0
+  b    1.0
+  c    2.0
+  dtype: float64
+  ```
+
+  - index를 지정해주면 에러가 나지 않는다. 모호함이 없어져서~ 
+
+- 정수가 라벨인 경우 ! integer index
+
+  ```python
+  >>> ser = pd.Series(np.arange(3.0))
+  >>> ser
+  0    0.0
+  1    1.0
+  2    2.0
+  dtype: float64
+  ```
+
+  - ser가 0, 1, 2가 라벨인 인덱스를 갖고 있다.
+
+  - 보통 라벨을 먼저 찾지만, 인덱싱과 슬라이싱을 제대로 하고싶고, label 인덱싱을 하고싶다면
+
+    - loc (for labels)
+
+  - 정수 인덱싱을 하고 싶다면 
+
+    - iloc (for integers)
+
+    ```python
+    >>> ser.loc[:1]
+    0    0.0
+    1    1.0
+    dtype: float64
+    >>> ser.iloc[:1]
+    0    0.0
+    dtype: float64
+    ```
+
+    - loc을 사용한다면, 라벨 기준이기 때문에 0부터 1까지 포함해서 출력을 하고
+    - iloc을 사용한다면 0부터 1-1 까지 0만 출력한다
+
+
+
+### Arithmetic and Data Alignment
+
+> 산술연산을 통한 데이터 정렬
+
+Pandas에서 가장 중요한 기능 중 하나는, **다른 인덱스를 가진 객체들간에 산술 연산이 가능하다는 것 !**
+
+DB에서 outer join과 유사하게 동작한다.
+
+```python
+>>> s1 = pd.Series([7.3, -2.5, 3.4, 1.5], index = ['a' ,'b','c','d'])
+>>> s1
+a    7.3
+b   -2.5
+c    3.4
+d    1.5
+dtype: float64
+>>> s2 = pd.Series([-2.1, 3.6, -1.5, 4, 3.1], index = ['a', 'c', 'e', 'f', 'g'])
+>>> s2
+a   -2.1
+c    3.6
+e   -1.5
+f    4.0
+g    3.1
+dtype: float64
+```
+
+- s1은 a,b,c,d를 인덱스로, s2는 a,c,e,f,g를 인덱스로 갖는 Series들이다
+- 이 두 시리즈를 더할경우, 매칭되는 인덱스끼리 덧셈이 되고, 서로 겹치지 않는 값은 NaN으로 채워진다
+
+```python
+>>> s1 + s2
+a    5.2
+b    NaN
+c    7.0
+d    NaN
+e    NaN
+f    NaN
+g    NaN
+dtype: float64
+```
+
+- 산술연산의 경우 missing value가 전파된다 !!
+  - 즉 예를들어, b index 같은경우, s1 + s2는
+    - -2.5 + NaN = NaN 이 된것이다 !
+
+
+
+##### DataFrame에서의 Data 정렬
+
+- DataFrame에서 정렬은 row와 column에 모두 적용이 된다.
+- 예시로 두 dataFrame을 더한 결과를 살펴보면서 알아보자
+
+```python
+>>> df1 = pd.DataFrame(np.arange(9.).reshape((3, 3)), columns = list('bcd'), index = ['Ohio', 'Texas', 'Colorado'])
+>>> df2 = pd.DataFrame(np.arange(12.).reshape((4, 3)), columns = list('bde'), index = ['Utah', 'Ohio', 'Texas', 'Oregon'])
+>>> df1
+            b    c    d
+Ohio      0.0  1.0  2.0
+Texas     3.0  4.0  5.0
+Colorado  6.0  7.0  8.0
+>>> df2
+          b     d     e
+Utah    0.0   1.0   2.0
+Ohio    3.0   4.0   5.0
+Texas   6.0   7.0   8.0
+Oregon  9.0  10.0  11.0
+
+>>> df1 + df2
+            b   c     d   e
+Colorado  NaN NaN   NaN NaN
+Ohio      3.0 NaN   6.0 NaN
+Oregon    NaN NaN   NaN NaN
+Texas     9.0 NaN  12.0 NaN
+Utah      NaN NaN   NaN NaN
+```
+
+- 두 데이터 프레임을 더한 결과를 보면, 두 DataFrame에 존재하는 row index, column index가 하나로 합쳐지며, 각각에 겹치는 인덱스만 연산이 진행되며, 겹치지 않는건 NaN으로 채워진다
+
+
+
+- 공통되는 Column , row label을 연산하면 NaN인데 서로 겹치지 않으면 NaN
+
+- Nan 값을 채우는 방법 
+
+  - np.nan 을 쓰면 NaN 값을 넣을 수 있는데,
+
+  - Add method 를 사용하고  fill_value 옵션으로 NaN에 해당값을 변경할 수 있다.
+
+  - ```python
+    >>> df1.add(df2, fill_value=0)
+                b    c     d     e
+    Colorado  6.0  7.0   8.0   NaN
+    Ohio      3.0  1.0   6.0   5.0
+    Oregon    9.0  NaN  10.0  11.0
+    Texas     9.0  4.0  12.0   8.0
+    Utah      0.0  NaN   1.0   2.0
+    ```
+
+  - 왜 안되는지 모르겠다. 근데 이론상으로는 fill_value 값을 더한다는 느낌
+
+  - 즉 없는데 a + NaN = NaN 이 아닌, a + fill_value 로 진행되는것
+
+- reindex할때도 NaN을 fill_value로 채워줄 수 있다.  
+
+
+
+산술연산 메소드들
+
+<img src="./readmeImg/forAfterMidTerm/pandas/arithmetic.png" alt="arithmetic" style="zoom:50%;" /> 
+
+```python
+>>> 1/df1
+                 b         c      d
+Ohio           inf  1.000000  0.500
+Texas     0.333333  0.250000  0.200
+Colorado  0.166667  0.142857  0.125
+>>> df1.div(1)
+            b    c    d
+Ohio      0.0  1.0  2.0
+Texas     3.0  4.0  5.0
+Colorado  6.0  7.0  8.0
+>>> df1.rdiv(1)
+                 b         c      d
+Ohio           inf  1.000000  0.500
+Texas     0.333333  0.250000  0.200
+Colorado  0.166667  0.142857  0.125
+```
+
+- 앞에 r이 달린 짝궁 메소드가 존재하는데,
+- df1 / 1은 df1.div(1) 과 같은 연산이며
+- 1/ df1 은 df1.rdiv(1)과 같은 연산이다
+- 즉 연산의 방향이 바뀐다 !
 
 
 
 
 
+### Operations between DataFrame & Series
+
+> DataFrame과 Series 간의 산술연산을 알아보자
+
+DataFrame은 2차원 배열, Series는 1차원 배열이라고 생각할 수 있다.
+
+NumPy에서 배운 broadcasting과 비슷하다.
+
+<img src="./readmeImg/forAfterMidTerm/pandas/operations.png" alt="operations" style="zoom:50%;" /> 
+
+```python
+>>> frame = pd.DataFrame(np.arange(12).reshape((4,3)), columns = list('bde'), index = ['Utah', 'Ohio', 'Texas', 'Oregon'])
+>>> frame
+        b   d   e
+Utah    0   1   2
+Ohio    3   4   5
+Texas   6   7   8
+Oregon  9  10  11
+
+>>> series = frame.iloc[0]
+>>> series
+b    0
+d    1
+e    2
+Name: Utah, dtype: int64
+    
+>>> frame - series
+        b  d  e
+Utah    0  0  0
+Ohio    3  3  3
+Texas   6  6  6
+Oregon  9  9  9
+```
+
+- Series 가 frame의 0번째 row값을 갖고 있는데, 여기서 frame과의 연산을 진행하면
+- broadcasting 과 비슷하게 각 row에 뺄셈 연산을 한다.
 
 
 
+만약 DataFrame의 column이나, Series의 index값을 찾을 수 없다면, 그 객체는 reindex 형태로 출력이 된다.
 
+<img src="./readmeImg/forAfterMidTerm/pandas/arithmetic2.png" alt="arithmetic2" style="zoom:50%;" /> 
 
-
+- d, f는 NaN으로 표현
 
 
 
