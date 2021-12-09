@@ -613,35 +613,296 @@ Oregon  9  9  9
 
 
 
+만약 각 row에 대해 DataFrame과 Series간에 연산을 진행하고 싶다면,**산술 연산 메소드를 사용하자**
+
+```python
+>>> series3 = frame['d']
+>>> frame
+        b   d   e
+Utah    0   1   2
+Ohio    3   4   5
+Texas   6   7   8
+Oregon  9  10  11
+>>> series3
+Utah       1
+Ohio       4
+Texas      7
+Oregon    10
+Name: d, dtype: int64
+>>> frame.sub(series3, axis = 'index')
+        b  d  e
+Utah   -1  0  1
+Ohio   -1  0  1
+Texas  -1  0  1
+Oregon -1  0  1
+```
+
+- sub 메소드를 사용한 경우이다. axis=0 또는 axis ='index'를 통해 row에 대한 연산이 가능하다.
 
 
 
+### Function Application and Mapping
+
+> Pandas 객체에 함수를 적용하기
+
+Pandas 객체도 NumPy의 ufuncs를 적용할 수 있다 !
+
+```python
+>>> frame
+        b  d  e
+Utah   -1  0  1
+Ohio   -1  0  1
+Texas  -1  0  1
+Oregon -1  0  1
+>>> np.abs(frame)
+        b  d  e
+Utah    1  0  1
+Ohio    1  0  1
+Texas   1  0  1
+Oregon  1  0  1
+```
 
 
 
+각 컬럼이나 로우에, 1차원 배열을 함수에 적용할 수도 있다!
+
+Apply method를 주로 사용한다.
+
+```python
+>>> f = lambda x : x.max() - x.min()
+>>> frame = pd.DataFrame(np.arange(12).reshape((4,3)), columns = list('bde'), index = ['Utah', 'Ohio', 'Texas', 'Oregon'])
+>>> frame
+        b   d   e
+Utah    0   1   2
+Ohio    3   4   5
+Texas   6   7   8
+Oregon  9  10  11
+>>> frame.apply(f)
+b    9
+d    9
+e    9
+dtype: int64
+```
+
+- 함수 f는 series의 최솟값과 최댓값의 차이를 계산하는 함수인데 이걸 dataFrame에 적용할 수 있따 [.apply(f)]
+- frame 객체의 column의 최댓값과 최솟값의 차이를 계산해서 리턴한다
+- axis=로 원하는 row, 혹은 column에 적용할 수 있다.
 
 
 
+apply method에 전달되는 함수는 꼭 scalar일 필요는 없다
+
+- Sequence data를 리턴값으로 가질수도있다 ~
 
 
 
+**applymap()**
+
+- series는 각 원소에 지정하는 함수를 map 메소드가 있기에, dataframe에서는 applymap()을 사용할 수 있음.
+
+![applymap](./readmeImg/forAfterMidTerm/pandas/applymap.png) 
 
 
 
+### Sorting and Ranking
+
+> Series와 DataFrame을 sorting하고, 순위를 매기는 법을 알아보자
 
 
 
+#### Sorting
+
+- row나  column의 인덱스를 오름차순으로 정렬하고 싶다면
+
+  - sort_index method를 사용한다
+
+    ```python
+    >>> obj = pd.Series(range(4), index = ['d','a','c','b'])
+    >>> obj
+    d    0
+    a    1
+    c    2
+    b    3
+    dtype: int64
+    >>> obj.sort_index()
+    a    1
+    b    3
+    c    2
+    d    0
+    dtype: int64
+    ```
+
+- DataFrame의 경우는, row나 column 둘 중 하나를 기준으로 sort할 수있다
+
+  - default는 row 기준이다
+
+    ```python
+    >>> frame = pd.DataFrame(np.arange(8).reshape((2, 4)), index = ['three','one'], columns = ['d','a','b','c'])
+    >>> frame
+           d  a  b  c
+    three  0  1  2  3
+    one    4  5  6  7
+    >>> frame.sort_index()
+           d  a  b  c
+    one    4  5  6  7
+    three  0  1  2  3
+    ```
+
+  - axis = 1로 넣어주면 column 정렬이 가능하다
+
+    ```python
+    >>> frame.sort_index(axis = 1)
+           a  b  c  d
+    three  1  2  3  0
+    one    5  6  7  4
+    ```
+
+- ascending 옵션을 통해 내림차순이 가능하다
+
+  - ascending = False 
 
 
 
+##### sort_values 를 통해 index가 아닌, 값을 기준으로 정렬할 수 있다.
+
+```python
+>>> obj = pd.Series([4, 7, -2, 1])
+>>> obj
+0    4
+1    7
+2   -2
+3    1
+dtype: int64
+>>> obj.sort_values()
+2   -2
+3    1
+0    4
+1    7
+dtype: int64
+```
+
+NaN값이 있는데 정렬하면, 맨 마지막에 있다.
 
 
 
+**DataFrame에서도 sort_values를 사용할 수 있다**
+
+- by라는 옵션으로 하나, 혹은 하나 이상의 컬럼 값들을 정렬할 수 있다.
+
+```python
+>>> frame =pd.DataFrame({'b': [4, 6, -3, 2], 'a': [0,1,0,1]})
+>>> frame
+   b  a
+0  4  0
+1  6  1
+2 -3  0
+3  2  1
+>>> frame.sort_values(by='b')
+   b  a
+2 -3  0
+3  2  1
+0  4  0
+1  6  1
+>>> frame.sort_values(by=['b','a'])
+   b  a
+2 -3  0
+3  2  1
+0  4  0
+1  6  1
+
+>>> frame.sort_values(by=['a','b'])
+   b  a
+2 -3  0
+0  4  0
+3  2  1
+1  6  1
+```
+
+- frame.sort_values(by=['a','b']) 의 경우
+  - 먼저  'a'를 통해 정렬을 하고, 동일한 값이 존재할 때 b를 통해 정렬을 진행한다
 
 
 
+**Ranking**
+
+- Sorting과 비슷하지만, sorting을 하여 순위화 한 정보를 반환한다
+- rank() 메소드를 사용
+- 1등에 N점을, 꼴등에 1 점을 부여한다. 동점인경우 평균값을 넣어준다
+
+```python
+>>> obj = pd.Series([7, 2, 7, -5, 3, 4, 6, 6])
+>>> obj.rank()
+0    7.5 # 8개 값, 1등이 두 개라 7.5 [8 + 7 / 2 = 7.5]  
+1    2.0
+2    7.5
+3    1.0
+4    3.0
+5    4.0
+6    5.5
+7    5.5
+dtype: float64
+```
+
+- method 옵션을 사용하면, 동점인 경우 순위화를 사용할 수 있따
+
+  ```python
+  >>> obj.rank(method = 'first')
+  0    7.0
+  1    2.0
+  2    8.0
+  3    1.0
+  4    3.0
+  5    4.0
+  6    5.0
+  7    6.0
+  dtype: float64
+  ```
+
+- method = 'first' 라면, **데이터가 나타나는 순서에 따라 순위화를 할 수 있다**
+  - 0과 2가 동점이었는데, 먼저 출연한 순서대로 7점 8점을 부여했다
 
 
+
+ranking은 오름차순이 default이며,  ascending = False 옵션으로 내림차순도 가능하다
+
+mmehod = 'max' 인 경우, 동율일 경우, 더 높은 점수를 부여하라는 것
+
+**ranking method의 옵션들**
+
+![ranking](./readmeImg/forAfterMidTerm/pandas/ranking.png) 
+
+
+
+**DataFrame도 각각 column과 row에 대한 순위화가 가능하다**
+
+
+
+### Axis Indexes with Duplicate Labels
+
+> 중복된 인덱스에 대해 알아보자
+
+Pandas 에서도 대부분의 인덱스는 중첩되지 않게 만들지만, 중첩되게 만들수도있다
+
+```python
+>>> obj = pd.Series(range(4), index = ['a','b','a','b'])
+>>> obj
+a    0
+b    1
+a    2
+b    3
+dtype: int64
+```
+
+이 인덱스가 중복 인덱스인지, 아니면 유니크한 건지 알아보기 위해
+
+is_unique() 메소드를 쓸 수 있다
+
+```python
+>>> obj.index.is_unique
+False
+```
+
+- index가 중복된경우  False를 리턴
 
 
 
