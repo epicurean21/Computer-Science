@@ -39,6 +39,12 @@
       - Index Objects
   - [Pandas(II)](/Pandas(II).md)
     - Pandas Key Libraries
+    - Sorting and Ranking
+  - [Pandas(III)](/Pandas(III).md)
+    - Statistic Process
+    - Reduction or Summary Statistics
+    - Correlations and Convariance
+    - Unique Values, Value Counts, and Membership
 
 
 
