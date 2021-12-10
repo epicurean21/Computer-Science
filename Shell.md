@@ -617,5 +617,9 @@ CSE2113Course
 
 Parameter expansion에서 변수 ${}가 unset이거나, null 일 수 도있다. 그래서 **default 값을 지정할 수 있다.**
 
+<img src="./readmeImg/shell/shell2.png" alt="shell2" style="zoom:50%;" />
 
-
+- ${Parameter:-디폴트 값}
+  - 파라미터 변수로 치환, unset이거나 없으면(null) default로 !
+- ${Parameter-default}
+  - : 가 없으면 unset일 때만 !
