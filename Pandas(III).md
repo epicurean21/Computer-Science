@@ -197,3 +197,174 @@ dtype: object
 
 #### DataFrame에서의 Correlation and Covariance
 
+DataFrame상에 corr method와 cov method를 실행시키면 **행렬값으로 ** 리턴이 된다.
+
+<img src="./readmeImg/forAfterMidTerm/pandas/dataFrameCov.png" alt="dataFrameCov" style="zoom:50%;" /> 
+
+회사별로 상관관계와 공분산을 계산해서 출력을 해주는것을 볼 수 있다.
+
+Series 객체와는 달리, **corrwith** 메소드가 존재하는데, 이는 다른 시리즈 객체나 DataFrame과 상관관계를 측정 해준다.
+
+
+
+### Unique Value, Value counts, and Membership
+
+> 이와같은 메소드들은, 1차원 Series 객체들에서 값의 정보를 추출하는 메소드이다.
+
+
+
+#### Unique Method
+
+중복되는 값을 값을 제거하고, 유일한 값만 담고있는 Series 객체를 반환해준다.
+
+```python
+>>> obj = pd.Series(['c', 'a', 'd', 'a', 'a', 'b', 'b', 'c', 'c'])
+>>> uniques = obj.unique()
+>>> uniques
+array(['c', 'a', 'd', 'b'], dtype=object)
+```
+
+unique() 메소드를 적용하여 중복되는 값을 제거하고 유일한 원소들을 리턴하였다.
+
+
+
+#### Value Counts
+
+unique한 값들의 개수를 카운트 해주는 함수: value_counts()
+
+```python
+>>> obj
+0    c
+1    a
+2    d
+3    a
+4    a
+5    b
+6    b
+7    c
+8    c
+dtype: object
+
+
+>>> obj.value_counts()
+c    3
+a    3
+b    2
+d    1
+dtype: int64
+```
+
+Series 객체에서 각 원소의 개수를 계산해서 출력을 해준다.
+
+```python
+>>> pd.value_counts(obj.values, sort = False)
+c    3
+a    3
+d    1
+b    2
+dtype: int64
+```
+
+
+
+
+
+#### Membership
+
+- isin method
+  - 어떤 값이 Series 객체 내에 존재하는지 boolean 형식으로 알려준다.
+  - Series나 DataFrame의 column에서 원하는 값을 골라내고 싶을때 매우 유용하게 사용된다.
+
+```python
+>>> obj
+0    c
+1    a
+2    d
+3    a
+4    a
+5    b
+6    b
+7    c
+8    c
+dtype: object
+  
+>>> mask = obj.isin(['b', 'c']) # 'b', 'c'가 있는지 찾아본다
+>>> mask
+0     True
+1    False
+2    False
+3    False
+4    False
+5     True
+6     True
+7     True
+8     True
+dtype: bool
+```
+
+mask라는 boolean series 객체를 만들었다. 이걸 또 인자로 사용한다면, b와 c의 존재 위치를 알 수 있음.
+
+```python
+>>> obj[mask]
+0    c
+5    b
+6    b
+7    c
+8    c
+dtype: object
+```
+
+
+
+- Index.get_indexer method
+  - isin과 비슷하다.
+  - isin은 index와 value의 쌍을 출력해주는데, index.get_indexer는 여러 값이 들어가있는 배열에 유일한 값에 인덱스 배열을 구할 수 있다.
+
+```python
+>>> to_match = pd.Series(['c', 'a', 'b', 'b', 'c', 'a'])
+>>> unique_vals = pd.Series(['c', 'b', 'a'])
+>>> pd.Index(unique_vals).get_indexer(to_match)
+array([0, 2, 1, 1, 0, 2])
+```
+
+- 중복된 값이 들어있는 to_match series와, unique한 값을 갖고있는 unique_vals
+- index.get_indexer에 넣고 실행을 시키면, to_match 시리즈 객체의 값과 unique_vals 값을 매칭을 해서 위치에 해당한 인덱스를 출력해준다.
+
+
+
+#### Histogram
+
+- DataFrame의 각 컬럼에 대해 히스토그램을 구하는 방법
+
+```python
+>>> data = pd.DataFrame({'Qu1': [1,3,4,3,4], 'Qu2' : [2,3,1,2,3], 'Qu3': [1, 5, 2, 4,4]})
+>>> data
+   Qu1  Qu2  Qu3
+0    1    2    1
+1    3    3    5
+2    4    1    2
+3    3    2    4
+4    4    3    4
+```
+
+apply 함수를 사용해서 pd.value_counts를 써주고 missing value를 0으로 채워보자
+
+```python
+>>> result = data.apply(pd.value_counts).fillna(0)
+>>> result
+   Qu1  Qu2  Qu3
+1  1.0  1.0  1.0
+2  0.0  2.0  1.0
+3  2.0  2.0  0.0
+4  2.0  0.0  2.0
+5  0.0  0.0  1.0
+```
+
+- 각 column에 대해 1 부터 5 까지 몇 개가 나오는지를 출력해준다.
+
+
+
+#### unique values, counts, membership 
+
+<img src="./readmeImg/forAfterMidTerm/pandas/unique.png" alt="unique" style="zoom:50%;" /> 
+
