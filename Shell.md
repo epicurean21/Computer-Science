@@ -208,3 +208,414 @@ ${변수명} 또는 $변수명 으로 값을 참조되서 출력되는데 이를
 
 
 
+### Shell Variables: unset
+
+만든 변수를 해지, 삭제 하는 방법 ! unset
+
+unset varname: remove shell variable
+
+```bash
+jaemincho@jojaemin-uiMacBookPro 노트 % My=JAEMIN
+jaemincho@jojaemin-uiMacBookPro 노트 % echo $My
+JAEMIN
+jaemincho@jojaemin-uiMacBookPro 노트 % set | grep My
+My=JAEMIN
+jaemincho@jojaemin-uiMacBookPro 노트 % unset My
+jaemincho@jojaemin-uiMacBookPro 노트 % echo $My
+jaemincho@jojaemin-uiMacBookPro 노트 % set | grep My
+```
+
+- grep이라는 명령어는 입력받은 특정한 문자를 찾는 것 !
+- 즉 Set으로 모든 변수들 중 grep My로 My를 찾는다.
+
+
+
+### Example Codes
+
+```bash
+% myname=JaeMin
+% myNo=01011112222
+% _my=
+% set | grep my
+_my=''
+myNo=01011112222
+myname=JaeMin
+% type more # more는 프로그램, type을 써서 어디에 있는 유틸리티인지 확인할 수 있다.
+more is /usr/bin/more
+% type -p grep
+grep is /usr/bin/grep
+
+% unset myname
+% unset myNo
+% unset _my
+% echo | grep my
+```
+
+
+
+### Environment Variables: export and env
+
+지금까지는 일반 쉘 변수들이었다. 그 중에서도 부모로부터 물려받은 shell variables을 환경변수라한다.
+
+- 일반 shell variable을 **export** 명령어를 통해 환경변수로 만들 수 있다.
+
+  - export varname=value
+  - 환경변수로 관리가 된다.
+
+- set으로 모든 쉘 변수를 확인할 수 있는데, env (= printenv)는 환경변수만 보여준다
+
+  - ```bash
+    % export myName=JaeMin
+    % printenv
+    PWD=/Users/jaemincho/Desktop/JaeMinCho/4-2/오픈소스 S:W/노트
+    OLDPWD=/Users/jaemincho/Desktop/JaeMinCho/4-2/오픈소스 S:W
+    myName=JaeMin # 내가만든 환경변수가 요기잉네
+    ```
+
+- 만들어진 변수를 export 할 수도 있고, export 와 생성을 동시에 할 수 도있다.
+
+환경변수를 다시 일반변수로 만들수도있다 !
+
+**환경변수의 특성은, **
+
+- Shell variable은 현재 process만 영향을
+- 환경변수는 **자식들에게 영향을 준다**
+
+
+
+#### Environment Variable과 일반 변수의 차이점
+
+- Shell 변수 중 자식 프로세스에게 전달되는 변수 : 환경변수
+
+```python
+jaemincho@jojaemin-uiMacBookPro 노트 % no1=10
+jaemincho@jojaemin-uiMacBookPro 노트 % no2=20    
+jaemincho@jojaemin-uiMacBookPro 노트 % export no2
+jaemincho@jojaemin-uiMacBookPro 노트 % echo $no1, $no2
+10, 20
+jaemincho@jojaemin-uiMacBookPro 노트 % bash
+# 새로운 bash 실행
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+bash-3.2$ echo $no1, $no2 # no2는 환경변수 값이 있지만, no1은 없다
+, 20
+bash-3.2$ exit
+exit
+jaemincho@jojaemin-uiMacBookPro 노트 % echo $no1, $no2
+10, 20
+```
+
+
+
+그렇다면 환경변수를 다시 일반 변수로 만들고자 한다면?
+
+```bash
+$ export no1=10
+$ export -n no1
+```
+
+- export -n varname
+  - 다시 local variable [일반 변수] 로 바꾸어줄 수 있다.
+
+
+
+#### Make
+
+<img src="./readmeImg/shell/Make.png" alt="Make" style="zoom:50%;" /> 
+
+- $gcc 라고 생각하지만, 리눅스 환경에 따라 gcc compiler는 버전이 여러가지일 수 있다.
+- 실제 make file에서는 약속된 경로를 지정하고 거기있는 gcc를 사용하겠다는 약속을 한다.
+
+
+
+### Built-in Environment Variables
+
+- 리눅스가 미리 정의한 환경변수들 ! = 내장 환경변수
+- $ env 로 환경변수들 중 우리가 정의하지 않은것들
+- 관습적으로 대문자로 표시
+
+<img src="./readmeImg/shell/builtin.png" alt="builtin" style="zoom:50%;" /> 
+
+
+
+#### $PATH 환경변수
+
+- 명령어를 쉘에서 입력할때 명령어를 찾는데 도움을 준다
+- Shell이 명령어 들의 위치를 찾는 디렉토리 리스트를 값으로 갖고있다.
+
+```bash
+% echo $PATH
+/Library/Frameworks/Python.framework/Versions/3.8/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+```
+
+#### $HOME 
+
+- echo $HOME
+
+  ```bash
+   % echo $HOME
+  /Users/jaemincho
+  ```
+
+- 현재 설정된 home directory를 갖고있다.
+
+- 추가된 환경 변수들은 터미널이 종료되면 다 사라지는데, 영구적으로 변경내역들을 보존하고싶다면, ~/.bashrc 에 수정해야한다.
+
+
+
+
+
+## Command Expansions and Substitutions
+
+> 명령어의 확장과 치환 
+>
+> Linux Prompt에서 명령어를 작성하고 엔터를 치면, 그 문자열이 그대로 실행되는게 아닌, bash가 변환과정을 거친다.
+>
+> 그때 확장과 치환 과정을 거친다
+
+- Expansions and Substitution
+  - Brace Expansion
+  - Tilde Expansion
+  - Parameter Expansion (Variable Substitution)
+  - Command Substitution
+  - Filename expansion
+- Quoting rules
+  - Metacharacters
+  - Escape Character
+  - Single Quote
+  - Double Quote
+
+
+
+1. **어떠한 종류의 확정과 치환이 있는지 확인하고** 
+
+2. 확장과 치환의 순서에따른 결과가 다르게 나올 수 있다. 이 순서를 파악해보자.
+3. Quoting Rules을 이해해보자
+
+
+
+### Expansions and Substitution
+
+리눅스에서 명령어를 입력하면, bash/shell이 그 command line을 **tokenize하고 scan한다**
+
+특별한 원소가 포함되어있는지 찾아본다. 특별한 원소란
+
+- keyword 들
+- metacharacter 들
+
+그 role에 맞게끔 변경을해서 새로운 string으로 변환한다.
+
+**이러한 과정을 expand 또는 substitue** 된다고하고, 때론 둘이 혼용된다.
+
+
+
+#### 확장과 치환의 순서
+
+- Brace expansion
+  - {}
+- Tilde expansion
+  - ~
+  - HOME Directory
+- Parameter expansion (Variable substitution)
+  - ${varname}
+- Arithmetic Expansion
+  - 수식
+- Comman substitution
+  - 명령어
+- Filename expansion (globbing)
+  - ls * 
+  - metacharacter 들을 와일드카드 expansion 또는 Filename expansion 등이라 부른다.
+  - GNU-bash referece 기준으로 filename expansion
+
+
+
+이 순서대로 이루어진다.
+
+
+
+### Brace Expansion
+
+확장과 치환 과정중 제일 먼저 일어나는 일.
+
+e.g. echo b{ed,olt,ar}s 등 앞 뒤로 **prefix와 suffix를 사용해서 문자열들을 조합해서 확장할 수 있는 기능을 제공한다**
+
+```bash
+$ echo a{AA,BB}b
+aAAb aBBb
+$ echo {1, 2}
+1 2
+```
+
+brace {}를 기준으로 문자열이 확장된다. 보통은 앞 뒤로 글자를 붙혀서 원하는 패턴을 만들 수 있음
+
+* 단일항목의 경우 확장이 일어나지 않는다
+
+  ```bash
+  $ echo {1}
+  {1}
+  ```
+
+* 공백문자가 있으면 확장이 일어나지 않는다.
+
+  ```bash
+  $ echo a{aa,bb}b
+  aaab abbb
+  $ echo a{aa, bb}b # 공백문자!
+  a{aa, bb}b
+  ```
+
+
+
+카테시안 곱 형식등으로도 활용할 수 있다.
+
+```bash
+$ echo test{1,2}.{c,h}
+test1.c test1.h test2.c test2.h
+
+echo test{1,2,3}.{c,h}
+test1.c test1.h test2.c test2.h test3.c test3.h
+```
+
+Brace expansion에서 .. 를 활용하기도 하는데 이건 range를 표현한다.
+
+```bash
+$ echo {5..12}
+5 6 7 8 9 10 11 12
+
+$ echo {c..k}
+c d e f g h i j k
+
+$ echo {5..k} # startpoint와 endpoint가 불일치하면 수행되지 않는다.
+{5..k}
+```
+
+연달아 .. 가 나오면 increment가 된다! 
+
+```bash
+$ echo {1..10..2}
+1 3 5 7 9
+(base) jojaemin-uiMacBookPro:~ jaemincho$ echo {a..z..3}}
+a d g j m p s v y
+```
+
+이런것을 sequence expression이라고 한다.
+
+
+
+```bash
+$ echo {A..Z}{0..9} # 26 * 10 의 데이터를 한 번에 !
+A0 A1 A2 A3 A4 A5 A6 A7 A8 A9 B0 B1 B2 B3 B4 B5 B6 B7 B8 B9 C0 C1 C2 C3 C4 C5 C6 C7 C8 C9 D0 D1 D2 D3 D4 D5 D6 D7 D8 D9 E0 E1 E2 E3 E4 E5 E6 E7 E8 E9 F0 F1 F2 F3 F4 F5 F6 F7 F8 F9 G0 G1 G2 G3 G4 G5 G6 G7 G8 G9 H0 H1 H2 H3 H4 H5 H6 H7 H8 H9 I0 I1 I2 I3 I4 I5 I6 I7 I8 I9 J0 J1 J2 J3 J4 J5 J6 J7 J8 J9 K0 K1 K2 K3 K4 K5 K6 K7 K8 K9 L0 L1 L2 L3 L4 L5 L6 L7 L8 L9 M0 M1 M2 M3 M4 M5 M6 M7 M8 M9 N0 N1 N2 N3 N4 N5 N6 N7 N8 N9 O0 O1 O2 O3 O4 O5 O6 O7 O8 O9 P0 P1 P2 P3 P4 P5 P6 P7 P8 P9 Q0 Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 R0 R1 R2 R3 R4 R5 R6 R7 R8 R9 S0 S1 S2 S3 S4 S5 S6 S7 S8 S9 T0 T1 T2 T3 T4 T5 T6 T7 T8 T9 U0 U1 U2 U3 U4 U5 U6 U7 U8 U9 V0 V1 V2 V3 V4 V5 V6 V7 V8 V9 W0 W1 W2 W3 W4 W5 W6 W7 W8 W9 X0 X1 X2 X3 X4 X5 X6 X7 X8 X9 Y0 Y1 Y2 Y3 Y4 Y5 Y6 Y7 Y8 Y9 Z0 Z1 Z2 Z3 Z4 Z5 Z6 Z7 Z8 Z9
+$ echo {{A..Z},{a..z}}
+A B C D E F G H I J K L M N O P Q R S T U V W X Y Z a b c d e f g h i j k l m n o p q r s t u v w x y z
+```
+
+
+
+**Brace Expansion은 제일 먼저 일어나기 때문에 생각을 잘 해보장**
+
+```bash
+$ A=foo
+$ echo {1,2}$A
+1foo 2foo
+$ echo $A{1,2}
+null
+```
+
+- echo {1,2}$A 에서 brace expansion과 parameter expansion이 존재한다 [$A가 parameter expansion]
+- brace expansion이 우선이기 때문에, 1$A, 2$A로 brace expansion되고
+- 그 다음 parameter expansion을 통해 $A 가 foo로 바뀌면서 1foo 2foo가 된것
+- $A{1,2}같은 경우에는 먼저 brace expansion해서 $A1, $A2이고 이때 parameter expansion을 하기위해 A1을 찾지만 없어서 null이다 !! 
+
+
+
+**Brace Expansion 예제**
+
+```bash
+$ echo {1,2}
+1 2
+$ echo {1, 2}
+{1, 2}
+$ echo ab{1,2,3}cd
+ab1cd ab2cd ab3cd
+$ echo test{1,2}.{c,h}
+test1.c test1.h test2.c test2.h
+$ touch test{1,2,3}.{c,h,o} # touch는 파일 생성
+$ ls
+test2.c
+test2.h
+test2.o
+test3.c
+test3.h
+test1.c				test3.o
+test1.h				무제 폴더
+test1.o
+
+```
+
+
+
+### Tilde Expansion [~]
+
+Brace 확장이 끝나면, Tilde 확장으로 간다
+
+```bash
+$ echo ~
+/Users/jaemincho
+```
+
+~: home directory의 환경변수  $HOME
+
+~+: current working directory pwd $PWD
+
+~-:  previous working directory $OLDPWD
+
+```bash
+jaemincho@jojaemin-uiMacBookPro ~ $ cd Desktop 
+jaemincho@jojaemin-uiMacBookPro Desktop $ echo ~-
+/Users/jaemincho
+jaemincho@jojaemin-uiMacBookPro Desktop $ echo ~+
+/Users/jaemincho/Desktop
+jaemincho@jojaemin-uiMacBookPro Desktop $ echo ~
+/Users/jaemincho
+```
+
+
+
+### Parameter Expansion = Variable Substitution
+
+$ 변수명을 주면 해당 변수의 value로 치환된다 
+
+$parameter or ${parameter}
+
+```bash
+$ echo My home directory is $HOME
+My home directory is /Users/jaemincho
+```
+
+bash 가 brace expansion -> tilde expansion 후 parameter expansion을 가서 $HOME을 값으로 치환해준다.
+
+shell 이 변환시켜서 전달한거!
+
+```bash
+$ your_id=${USER}-on-${HOSTNAME}
+$ echo $your_id
+
+$ OSS=2113
+jaemincho-on-jojaemin-uiMacBookPro.local
+$ echo "CSE$OSSCourse"
+CSE
+
+$ echo "CSE${OSS}Course"
+CSE2113Course
+
+```
+
+- $OSSCourse는 null~ 그럴때 braces {}를 쓴다
+
+
+
+Parameter expansion에서 변수 ${}가 unset이거나, null 일 수 도있다. 그래서 **default 값을 지정할 수 있다.**
+
+
+
