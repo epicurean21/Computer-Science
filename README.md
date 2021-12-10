@@ -46,5 +46,13 @@
     - Correlations and Convariance
     - Unique Values, Value Counts, and Membership
 
+- Linux Commands and Shell Programming
+  - [Shell](./Shell.md)
+    - Shell
+    - Bash
+    - Shell Variables
+    - Environment Variables
+    - Built-in Environment variables
+
 
 
