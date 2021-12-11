@@ -777,5 +777,317 @@ $ echo $x $((--x)) $x
   <img src="./readmeImg/shell/wildcards.png" alt="wildcards" style="zoom:50%;" /> 
 
   - *: current woring directory (PWD)에서 0개 이상의 문자열과 매칭되는 **파일 이름들**로 문자열이 확장된다
+
     - $ ls *
+
+      ```bash
+      $ ls *
+      Shell.md
+      Thumbs.db
+      desktop.ini
+      Computer-Science-master:
+      Git Branch.md	NumPy(I).md	OSS.md		Pandas(III).md	Shell.md
+      Git.md		NumPy(II).md	Pandas(I).md	Python.md	readmeImg
+      GitHub.md	OSS Tools.md	Pandas(II).md	README.md
+      ```
+
+    - $ ls a*
+
+      - a로 시작하면서 0개 이상의 문자열을 다 출력 
+
+      ```bash
+      $ ls C*
+      Git Branch.md	NumPy(I).md	OSS.md		Pandas(III).md	Shell.md
+      Git.md		NumPy(II).md	Pandas(I).md	Python.md	readmeImg
+      GitHub.md	OSS Tools.md	Pandas(II).md	README.md
+      ```
+
+    - $ ls *.c
+
+      - .c로 끝나느 파일 전체 문자열 출력
+
+      ```bash
+      $ PWD
+      /Users/jaemincho/Desktop/Computer-Science-master
+      $ ls *.md
+      Git Branch.md	NumPy(I).md	OSS.md		Pandas(III).md	Shell.md
+      Git.md		NumPy(II).md	Pandas(I).md	Python.md
+      GitHub.md	OSS Tools.md	Pandas(II).md	README.md
+      ```
+
+    - $ ls ut*.c
+
+      - ut로 시작하고 .c로 끝나는 모든 파일 문자열 
+
+      ```bash
+      $ ls P*.md
+      Pandas(I).md	Pandas(II).md	Pandas(III).md	Python.md
+      ```
+
+  - ?
+
+    - Single character, 어떤게 와도 좋으나 한 문자로 구성된 파일 이름
+
+    - ls fo?
+
+      - 어떤것이 와도 좋지만 결국 세 글자 foa, fob 등등 ~
+
+      ```bash
+      $ ls OS?.md
+      OSS.md
+      ```
+
+  - [...]
+
+    - ls [abc]*
+
+      - [] 로 둘러쌓인 캐릭터들 중에 하나 아무거나로 시작하면서 모든것
+
+      ```bash
+      $ ls [OP]*
+      OSS Tools.md	Pandas(I).md	Pandas(III).md
+      OSS.md		Pandas(II).md	Python.md
+      ```
+
+      - O나 P로 시작하는 파일 아무거나
+
+
+
+#### 예제를 통해 알아보자
+
+```bash
+$ PWD
+/Users/jaemincho/Desktop/test
+$ touch test{1..3}.{c,h,o} # brace expansion ~ sequence 또는 comma, chd 9개의 파일
+$ ls
+test1.c	test1.h	test1.o	test2.c	test2.h	test2.o	test3.c	test3.h	test3.o
+
+$ ls test?.o # ? any single character
+test1.o	test2.o	test3.o
+
+$ ls test?.py # 존재안함 ! Filename expansion은 존재하는 파일들중 하나로 확장
+ls: test?.py: No such file or directory # 즉 에러
+
+$ ls *.[ch] # c또는 h로 끝나는 파일들
+test1.c	test1.h	test2.c	test2.h	test3.c	test3.h
+
+$ ls *.[^ch] # c,h를 제외 !!^를 이용한다
+test1.o	test2.o	test3.o
+```
+
+
+
+- Filename expansion은 **brace expansion 보다 후에 계산된다**
+
+```bash
+$ ls test?.[c-o] # ?와 []는 wildcard 
+test1.c	test1.h	test1.o	test2.c	test2.h	test2.o	test3.c	test3.h	test3.o
+
+$ ls test?.{c..o} # ?는 wildcard고 {c..o}는 brace expension.
+ls: test?.d: No such file or directory
+ls: test?.e: No such file or directory
+ls: test?.f: No such file or directory
+ls: test?.g: No such file or directory
+ls: test?.i: No such file or directory
+ls: test?.j: No such file or directory
+ls: test?.k: No such file or directory
+ls: test?.l: No such file or directory
+ls: test?.m: No such file or directory
+ls: test?.n: No such file or directory
+test1.c	test1.h	test1.o	test2.c	test2.h	test2.o	test3.c	test3.h	test3.o
+```
+
+- {c..o}는 brace expansion으로 먼저 저장된다.
+  - 그래서 test?.c , test?.d 등 을 찾고 나서 test?.c는 있지만 test?.d는 없어서 안되는 것 !
+
+
+
+#### Quiz - wildcard
+
+|           | oss1.py | fork.c | _oss1.py | My_test.txt | osstest.py |
+| --------- | ------- | ------ | -------- | ----------- | ---------- |
+| ls oss*   | O       | -      | -        | -           | O          |
+| ls \*_*   | -       | -      | O        | O           | -          |
+| ls ?o??.* | -       | O      | -        | -           | -          |
+| ls [a-z]* | O       | O      | -        | -           | O          |
+| ls *t     | -       | -      | -        | O           | -          |
+
+```bash
+$ ls
+My_test.txt	_oss1.py	fork.c		oss1.py		osstest.py
+$ ls oss*
+oss1.py		osstest.py
+$ ls *_*
+My_test.txt	_oss1.py
+$ ls ?o??.*
+fork.c
+$ ls [a-z]*
+fork.c		oss1.py		osstest.py
+$ ls *t
+My_test.txt
+$ ls ?o???.*
+_oss1.py
+```
+
+
+
+
+
+### Metacharacters
+
+> 지금까지 shell의 확장과 치환에 대해서 알아봤다.
+
+<img src="./readmeImg/shell/metacharacter.png" alt="metacharacter" style="zoom:50%;" /> 
+
+- shell은 다양한 확장 기능을 제공하기 위해 일부 문자들에 대한 특수 기능을 정의해놓았고, 이들을 **metacharacter 라고 한다**
+
+- Meta: 추상화된 상위데이터에 보통 메타라는 말을 쓴다
+
+
+
+### Quotes
+
+> metacharacter 들에대한 스페셜한 특수 기능을 없애기위해 " " quotes를 사용한다.
+>
+> " " 는 double quote
+>
+> ' ' 는 single quote
+>
+> 일반적인 프로그래밍 언어에서 " "는 문자열 처리로 사용되는데, shell에서는 기본적으로 문자열이기 때문에 " "dhk ' '가 동일하다 
+
+```bash
+$ a=11
+$ b='22'
+$ c="33" 
+$ echo $a $b $c $((a+b+c))
+11 22 33 66
+```
+
+이런식으로 기본 문자열 처리이기 때문에 " "나 ' '를 사용하던 안사용하던 똑같은 상황이 존재한다
+
+그럼 언제 사용할까 ?
+
+```bash
+$ ls hello world
+ls: hello: No such file or directory
+ls: world: No such file or directory
+$ ls "hello world"
+ls: hello world: No such file or directory
+```
+
+- ls hello world의 경우 공백문자가 있다. 그런경우 hello, world 의 두개의 서로 다른 인자가 ls 에게 전달되는거.
+- 공백문자도 특수한 캐릭터 metacharacter 이기 때문에
+- "hello world" 로 하나의 문자열로 묶어서 인자로 전달한다.
+
+```bash
+$ ls oss*.py
+oss1.py		osstest.py
+$ ls "oss*.py" # 만약 정말 oss*.py라는 파일이 존재한다면 !?
+ls: oss*.py: No such file or directory
+```
+
+- *의 특수한 목적을 사라지게 하고 실제 문자열 값을 사용하도록 한다.
+
+
+
+리눅스에서는 single quote (' ')와 double quote (" ")가 조금 다르게 동작한다. 잘 구분해보자 - quoting rules
+
+
+
+### Quoting rules
+
+- 미리 정의된 character들 (e.g. metacharacters) 의 의미를 없애고, bypass하도록
+- Bash에서는 세 가지를 제공한다
+  1. Escape character
+     - \
+       - \\*하면 *의 의미가 사라진다
+  2. Single quote
+     - ' '
+  3. Double quote
+     - " "
+     - 거의 대부분 없애지만 **예외가 존재한다.**
+
+
+
+#### Escape Character
+
+- ₩ (backslash)
+
+  ```bash
+  $ touch test{1..3}.py # brace expension을 통해 세 개의 파일을 만듬
+  $ ls
+  test1.py	test2.py	test3.py
+  $ touch * # 이미 존재하기 때문에 생성되지는 않고 timestamp를 현재 시간으로 바꿈
+  $ ls
+  test1.py	test2.py	test3.py
+  $ touch \* # \ 를 이용해 * (wildcard)의 의미를 없앰 그래서 생성함
+  $ ls
+  *		test1.py	test2.py	test3.py
+  $ ls
+  *		test1.py	test2.py	test3.py
+  $ touch test?.py
+  $ ls
+  *		test1.py	test2.py	test3.py
+  $ touch test\?.py # ? (wildcard)의 의미를 없애서 test?.py가 생성된다
+  $ ls
+  *		test1.py	test2.py	test3.py	test?.py
+  $ echo \$USER # $USER의 변수의 $가 의미가 없어지고 문자열로 
+  $USER
+  ```
+
+
+
+### Single Quote (' ') and Double Quote (" ")
+
+#### Single Quote: Strong quote
+
+- ' ' 사이에 모든 내용을 bypass 한다 !
+- 모두 special 기능이 사라진다
+
+#### Double Quote: Weak quote
+
+- " " 사이에 의미를 bypass 해주지만 **예외가 존재한다**
+
+- Parameter Expension, command substitution은 bypass하지 못한다
+
+  - ```bash
+    $ echo 'Path is $PATH' # single quote는 모두 bypass
+    Path is $PATH
+    $ echo "Path is $PATH" # parameter expension은 bypass 못한다
+    Path is /opt/anaconda3/bin:/opt/anaconda3/condabin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+    
+    $ echo 'Today is $(date)'
+    Today is $(date)
+    $ echo "Today is $(date)" # 명령 치환 (command expension)은 bypass 못한다
+    Today is 2021년 12월 11일 토요일 17시 24분 17초 KST
+    ```
+
+
+
+#### 예제
+
+```bash
+$ touch this is a $USER
+$ ls
+a		is		jaemincho	this
+
+$ touch 'this is a $USER'
+$ ls
+a		is		jaemincho	this		this is a $USER
+
+$ touch "this is a $USER"
+$ ls
+a			jaemincho		this is a $USER
+is			this			this is a jaemincho
+```
+
+
+
+
+
+
+
+
+
+
 
