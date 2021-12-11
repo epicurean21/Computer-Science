@@ -434,7 +434,7 @@ $ export -n no1
 
 
 
-### Brace Expansion
+### Brace Expansion: {}
 
 확장과 치환 과정중 제일 먼저 일어나는 일.
 
@@ -582,7 +582,7 @@ jaemincho@jojaemin-uiMacBookPro Desktop $ echo ~
 
 
 
-### Parameter Expansion = Variable Substitution
+### Parameter Expansion (Variable Substitution): $parameter or ${parameter}
 
 $ 변수명을 주면 해당 변수의 value로 치환된다 
 
@@ -640,9 +640,142 @@ $ echo ${OSS-2114}
 
 
 
-### Command Substitution
+### Command Substitution: $(command) or \`command`
 
-명령 치환 !
+- 명령 치환 !
 
 명령치환은 명령어의 결과물로 확장하는 문법이다.
+
+- $(command-name) 또는 \`command-name` 으로 사용하면 명령치환이 된다
+- 명령 실행 결과값이 stdout으로 나와서, pipe으로 연결된다.
+  - 일종의 **IPC** 라고 생각할 수 있다.
+
+```bash
+$ echo User $(whoami) is on `hostname`
+User jaemincho is on jojaemin-uiMacBookPro.local
+```
+
+- ${whoami} 는 사용자 계정을 알려주고
+
+중첩되서 쓰는건 괄호형을 쓰는것이 낫다 !
+
+```bash
+$ echo $(echo $(ls))
+Applications Applications (Parallels) CLionProjects DataGripProjects Desktop Documents Downloads Library Movies Music Parallels Pictures Public PycharmProjects UltData_Serialize eclipse nltk_data
+```
+
+```bash
+$ echo Today is $(date)
+Today is 2021년 12월 11일 토요일 15시 48분 34초 KST
+$ echo today is `date +%Y%m%d` 
+today is 20211211
+```
+
+```bash
+$ touch homework-${USER}-$(date +%Y%m%d)
+$ ls
+homework-jaemincho-20211211
+```
+
+- Parameter expansion과 command substitution을 동시에 사용한 경우 ~
+
+```bash
+$ echo "Today is $(date;cal)"
+Today is 2021년 12월 11일 토요일 15시 51분 42초 KST
+      12월 2021        
+일 월 화 수 목 금 토  
+          1  2  3  4  
+ 5  6  7  8  9 10 11  
+12 13 14 15 16 17 18  
+19 20 21 22 23 24 25 
+```
+
+
+
+### Arithmetic Expansion: $((Expression))
+
+<img src="./readmeImg/shell/arithmetic.png" alt="arithmetic" style="zoom:50%;" /> 
+
+- $((expression)): 안에 expression을 evaluate하고 expansion해서 문자열로 출력한다 !
+  - 만약 expression이 valid하지 않으면 에러발생한다
+- $[expression]은 legacy, deprecate됐음
+
+```bash
+$ a=10
+$ b=20
+$ c=a+b  #기본 문자열로 된다.
+$ echo $a $b $c
+10 20 a+b
+
+
+$ c=$((a+b)) #산술연산을 하고싶다면 ! a + b의 산술연산을 하고 문자열로 변환해서 c에 들어간다 
+$ echo $a $b $c
+10 20 30
+```
+
+- 주의할점은 $((expression)) 에서 Expression에는 **$가 없어도 변수로 취급한다 !!**
+
+```bash
+$ a=10
+$ b=20
+$ c=$((a+b))
+$ d=$((c=a**2))
+$ echo $a $b $c $d
+10 20 100 100
+
+$ expr a + $((b+3)) # a 가 $가 아니면 문자열로 취급해서 에러가난다
+expr: not a decimal number: 'a'
+
+$ expr $a + $((b+3))
+33
+```
+
+
+
+### Expansion Substitution Using $
+
+- $ 를 이용한 expansion과 substitution
+
+>  Brace Expansion --> Tilde Expansion 후 나온 세 가지 확장을 정리해보자
+
+| ${}: Parameter Expansion        | $AA, ${AA}, ${AA:-4} |
+| :------------------------------ | -------------------- |
+| **$(()): Arithmetic Expansion** | **$((1+2))**         |
+| **$(): Command Substitution**   | **$(date;cal)**      |
+
+**세 가지는 동시에 일어나면서 왼쪽에서 오른쪽으로 (left-to-right) 수행된다** 
+
+```bash
+# Command Substitution
+$ NOW=$(date +%Y%m%d) # command를 실행하고 문자열이 NOW에 들어간다
+# Parameter Expansion
+$ echo ${NOW:-20211231} # unset이거나 null이면
+20211211
+
+$ x=5
+$ y=10
+# Arithmetic Expansion
+$ ans=$((x+y))
+$ echo "$x + $y = $ans"
+5 + 10 = 15
+$ echo $x $((x++)) $x # left - to - right
+5 5 6
+$ echo $x $((--x)) $x
+6 5 5
+```
+
+
+
+### Filename Expansion
+
+- Wildcards (a.k.a glob)
+
+  - special character
+  - 존재하는 파일 이름에서 패턴을 표현하기 위한 special character
+  - *, ?, [...] 등이 존재한다
+
+  <img src="./readmeImg/shell/wildcards.png" alt="wildcards" style="zoom:50%;" /> 
+
+  - *: current woring directory (PWD)에서 0개 이상의 문자열과 매칭되는 **파일 이름들**로 문자열이 확장된다
+    - $ ls *
 
