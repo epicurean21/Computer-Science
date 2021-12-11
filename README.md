@@ -29,7 +29,6 @@
     - Pseudorandom Number Generation
       - example) Random Walks
   
-
 - Pandas
   - [Pandas (I)](/Pandas(I).md)
     - What is Pandas ?
@@ -45,7 +44,6 @@
     - Reduction or Summary Statistics
     - Correlations and Convariance
     - Unique Values, Value Counts, and Membership
-
 - Linux Commands and Shell Programming
   - [Shell](./Shell.md)
     - Shell
@@ -53,6 +51,11 @@
     - Shell Variables
     - Environment Variables
     - Built-in Environment variables
-
-
-
+  - [Linux](./Linux.md)
+    - Bash Option
+    - Linux Commands
+    - Redirection
+      - standard input redirection [0< or <]
+      - standard output redirection [1> or >]
+      - standard error redirection [2>]
+        - combine [2>&1]
