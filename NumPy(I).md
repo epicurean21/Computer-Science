@@ -220,7 +220,7 @@ arr2 = np.array(data2)
   - 가장 쉬운 예제는, scalar 값과 배열에 연산을 하는 경우이다
 
   - ```python
-    arr = np.arrange(5)
+    arr = np.arange(5)
     arr * 4 # 모든 array의 원소에 적용이 된다.
     # 즉 모든 scalar값 4가 모든 원소에 적용이 되므로, scalar 4가 모든 배열에 broadcast 되었다고 할 수 있다.
     arr = (0,4,8,12,16)
@@ -673,7 +673,7 @@ array([ 0,  1,  2,  3,  4, 12, 12, 12,  8,  9])
 
      - 주로 행렬 계산에 자주 사용된다.
 
-     - 예를들어, np.dop() 은 행렬의 내적연산 메소드인데, 이럴때 transpose를 이용해 계산한다
+     - 예를들어, np.dot() 은 행렬의 내적연산 메소드인데, 이럴때 transpose를 이용해 계산한다
 
      - ```python
        >>> arr = np.arange(12).reshape(3,4)

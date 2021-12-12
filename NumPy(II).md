@@ -581,11 +581,9 @@ array([False, False,  True,  True,  True, False, False, False,  True,
 
 - Linear Algebra의 각종 함수들
 
-  ![linearAlgebra](/Users/jaemincho/Desktop/JaeMinCho/4-2/오픈소스 S:W/노트/readmeImg/forAfterMidTerm/linearAlgebra.png) 
+  ![linearAlgebra](./readmeImg/forAfterMidTerm/linearAlgebra.png)  
 
 
-
-​	
 
 ### Pseudorandom Number Generation
 
