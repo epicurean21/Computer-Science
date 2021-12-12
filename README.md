@@ -2,20 +2,25 @@
 
 - Python
   - [Python](/Python.md)
+  
 - OpenSource Software [OSS]
   - Free Software & Open Source Software
   - Licenses
   - [OSS](/OSS.md)
+  
 - OSS Tools
   - [OSS Tools](/OSS%20Tools.md)
+  
 - Git
   - What is Git 
   - Git commands [Terminal commands]
   - [Git](/Git.md)
+  
 - GitHub
   - Remote Repository & Local Repository
   - Backup & Collaboration
   - [GitHub](/GitHub.md)
+  
 - NumPy
   - [NumPy (I)](/NumPy(I).md)
     - What is NumPy and Why we need it
@@ -28,6 +33,7 @@
     - Linear Algebra
     - Pseudorandom Number Generation
       - example) Random Walks
+  
 - Pandas
   - [Pandas (I)](/Pandas(I).md)
     - What is Pandas ?
@@ -43,6 +49,7 @@
     - Reduction or Summary Statistics
     - Correlations and Convariance
     - Unique Values, Value Counts, and Membership
+
 - Linux Commands and Shell Programming
   - [Shell](./Shell.md)
     - Shell
@@ -50,6 +57,15 @@
     - Shell Variables
     - Environment Variables
     - Built-in Environment variables
+    - Command Expansions and Substitutions
+      - Brace Expansion - {}
+      - Tilde Expansion - ~
+      - Parameter Expansion or Variable Substitution - ${} or $
+      - Command Substitution - $() or \``
+      - Arithmetic Expansion - $(())
+      - Filename expansion
+        - Wildcards (a.k.a glob) - *, ?, [..]
+  
   - [Linux](./Linux.md)
     - Bash Option
     - Linux Commands
