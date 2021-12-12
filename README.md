@@ -2,25 +2,20 @@
 
 - Python
   - [Python](/Python.md)
-  
 - OpenSource Software [OSS]
   - Free Software & Open Source Software
   - Licenses
   - [OSS](/OSS.md)
-  
 - OSS Tools
   - [OSS Tools](/OSS%20Tools.md)
-  
 - Git
   - What is Git 
   - Git commands [Terminal commands]
   - [Git](/Git.md)
-  
 - GitHub
   - Remote Repository & Local Repository
   - Backup & Collaboration
   - [GitHub](/GitHub.md)
-  
 - NumPy
   - [NumPy (I)](/NumPy(I).md)
     - What is NumPy and Why we need it
@@ -33,7 +28,6 @@
     - Linear Algebra
     - Pseudorandom Number Generation
       - example) Random Walks
-  
 - Pandas
   - [Pandas (I)](/Pandas(I).md)
     - What is Pandas ?
@@ -49,7 +43,6 @@
     - Reduction or Summary Statistics
     - Correlations and Convariance
     - Unique Values, Value Counts, and Membership
-
 - Linux Commands and Shell Programming
   - [Shell](./Shell.md)
     - Shell
@@ -65,7 +58,6 @@
       - standard output redirection [1> or >]
       - standard error redirection [2>]
         - combine [2>&1]
-  
   - [Pipe and Shell Script](./Pipe_Shell_Script.md)
     - Pipe and Filter
     - Cut and **Awk**
@@ -73,3 +65,9 @@
     - **Shell Script**
     - **Position Parameter**
     - User Input
+  - [Compound Commands](./Compound_Commands.md)
+    - Test command
+    - Compound Commands
+    - Conditional Construct
+      - If statement
+      - Case statement
