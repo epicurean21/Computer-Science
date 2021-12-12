@@ -883,7 +883,7 @@ test1.o	test2.o	test3.o
 $ ls test?.[c-o] # ?와 []는 wildcard 
 test1.c	test1.h	test1.o	test2.c	test2.h	test2.o	test3.c	test3.h	test3.o
 
-$ ls test?.{c..o} # ?는 wildcard고 {c..o}는 brace expension.
+$ ls test?.{c..o} # ?는 wildcard고 {c..o}는 brace expansion.
 ls: test?.d: No such file or directory
 ls: test?.e: No such file or directory
 ls: test?.f: No such file or directory
@@ -953,7 +953,7 @@ _oss1.py
 >
 > ' ' 는 single quote
 >
-> 일반적인 프로그래밍 언어에서 " "는 문자열 처리로 사용되는데, shell에서는 기본적으로 문자열이기 때문에 " "dhk ' '가 동일하다 
+> 일반적인 프로그래밍 언어에서 " "는 문자열 처리로 사용되는데, shell에서는 기본적으로 문자열이기 때문에 " "와 ' '가 동일하다 
 
 ```bash
 $ a=11
@@ -1014,7 +1014,7 @@ ls: oss*.py: No such file or directory
 - ₩ (backslash)
 
   ```bash
-  $ touch test{1..3}.py # brace expension을 통해 세 개의 파일을 만듬
+  $ touch test{1..3}.py # brace expansion을 통해 세 개의 파일을 만듬
   $ ls
   test1.py	test2.py	test3.py
   $ touch * # 이미 존재하기 때문에 생성되지는 않고 timestamp를 현재 시간으로 바꿈
@@ -1048,7 +1048,7 @@ ls: oss*.py: No such file or directory
 
 - " " 사이에 의미를 bypass 해주지만 **예외가 존재한다**
 
-- Parameter Expension, command substitution은 bypass하지 못한다
+- Parameter Expansion, command substitution은 bypass하지 못한다
 
   - ```bash
     $ echo 'Path is $PATH' # single quote는 모두 bypass
