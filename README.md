@@ -22,7 +22,7 @@
   - [GitHub](/GitHub.md)
   
 - NumPy
-  - [NumPy (I)](/NumPy(I).md)
+  - [NumPy (I)](./NumPy(I).md)
     - What is NumPy and Why we need it
     - ndarray 
       - Indexing and Slicing
@@ -44,10 +44,10 @@
   - [Pandas(II)](/Pandas(II).md)
     - Pandas Key Libraries
     - Sorting and Ranking
-  - [Pandas(III)](/Pandas(III).md)
+  - [Pandas(III)](./Pandas(III).md)
     - Statistic Process
     - Reduction or Summary Statistics
-    - Correlations and Convariance
+    - Correlations and Convariance 
     - Unique Values, Value Counts, and Membership
 
 - Linux Commands and Shell Programming
