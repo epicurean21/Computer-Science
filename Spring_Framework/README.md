@@ -10,11 +10,11 @@
 
 ### Spring Boot WebFlux
 
-- [Spring_WebFlux](./Spring_WebFlux)
+- [Spring_WebFlux](./Spring_WebFlux.md)
   - Reactive Streams
   - Functional Programming
   - Back-Pressure [역압]
-- [Reactive](./Reactive)
+  - [Reactive](./Reactive.md)
   - Reactive System
   - Reactive Programming
   - Observer Pattern & Iterator Pattern
