@@ -14,7 +14,7 @@
   - Reactive Streams
   - Functional Programming
   - Back-Pressure [역압]
-  - [Reactive](./Reactive.md)
+- [Reactive](./Reactive.md)
   - Reactive System
   - Reactive Programming
   - Observer Pattern & Iterator Pattern
