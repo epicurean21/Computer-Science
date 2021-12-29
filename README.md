@@ -10,20 +10,23 @@
   - NumPy
   - Pandas
   - Linux and Shell
+  - Docker
 
 
 
 ### Java
 
 - [Java](./Java/Java.md)
+  
   - Native Java
+  
     - Collection
     - Overriding & Overloading
   
-  - JVM (Java Virtual Machine)
+    - JVM (Java Virtual Machine)
+  
   - Garbage Collection
     - [Garbage Collection](./Java/Garbage_Collection.md)
-  
 
 
 
