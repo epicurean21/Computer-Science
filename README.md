@@ -2,7 +2,7 @@
 
 
 
-### Open Source & Python
+### Open Source
 
 - [Open_Source](./Open_Source)
   - Python
@@ -11,6 +11,7 @@
   - Pandas
   - Linux and Shell
   - Docker
+  - Redis
 
 
 
