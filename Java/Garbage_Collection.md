@@ -80,7 +80,7 @@ card table에는 old 영역의 객체가 young 영역의 객체를 참조할 때
 
  Young 영역에서 gc가 실행되면, old 영역에 있는 모든 객체의 참조를 확인하는 것이 아닌, 이러한 card table만을 확인하여 GC 대상인지를 식별하게 된다.
 
-
+ 
 
 ### Young 영역의 구성
 
