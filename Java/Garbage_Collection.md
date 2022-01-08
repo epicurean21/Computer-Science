@@ -123,4 +123,32 @@ Bump-the-pointer 는 Eden 영역에 할당 된 마지막 객체를 <u>추적한�
 
 Multi-Thread 환경해서는 다른 문제가 발생한다. Thread-Safe 하기 위해 여러 thread를 사용하는 객체를 Eden 영역에 저장할 때는, 해당 thread에 lock (락)이 발생하게 되고, 이런경우 lock-contention 때문에 성능이 떨어지는데, 이를 해결하기 위한 방법이 TLABs 이다.
 
-TLABs 는 스레드가 각각의 몫에 해당하는 Eden 영역의 작은 덩어리를 가질 수 있도록 하는 것이다.
+TLABs 는 스레드가 각각의 몫에 해당하는 Eden 영역의 작은 덩어리를 가질 수 있도록 하는 것이다. 각각의 thread는 자기가 갖고 있는 TLAB에만 접근이 가능하기에, bump-the-pointer 기술을 사용해도 lock 없이 thread-safe하게 eden 영역에 객체 메모리 할당이 가능하다.
+
+> Minor GC란...
+>
+> 'Eden 영역에 최초로 객체가 만들어지고, Survivor 영역을 통해서 Old 영역으로 오래 살아남은 객체가 이동한다는 사실은 꼭 기억하자'
+
+
+
+### Old 영역의 Garbage Colllection
+
+기본적으로, Old 영역에서의 GC는 데이터가 가득 찾을 때 실행된다. 여러가지의 GC 방식이 있는데, JDK 7 기준으로 다음과 같은 5개의 방식 (알고리즘)이 존재한다.
+
+1. Serial GC
+2. Parallel GC
+3. Parallel Old GC (= Parallel Compacting GC)
+4. Concurrent Mark & Sweep GC (= CMS)
+5. G1 (Garbage First) GC
+
+
+
+#### Serial GC (-XX:+UseSerialGC)
+
+
+
+#### Parallel GC (-XX:+UseParallelGC)
+
+
+
+#### 
