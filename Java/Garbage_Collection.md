@@ -114,3 +114,13 @@ Young 영역에서 발생하는 GC인 minor gc를 정리하면,
 <img src="./img/garbage_collection/minorGc.png" alt="minorGc" style="zoom:75%;" />
 
 위와 같은 상황이라 할 수 있다. 흐름도의 윗 부분은, Young 영역에서 Minor GC가 발생하기 전 상황이며, 밑에 GC 후는 minor GC 후 라고 할 수 있다.
+
+#### Bump-the-pointer & TLABs (Thread-Local Allocation Buffers)
+
+'Bump-the-pointer' 과 'TLABs (Thread-Local Allocation Buffers)' 라는 기술은 HotSpot VM에서 **보다 빠른 메모리 할당을 위한 두 가지 기술이다.** 
+
+Bump-the-pointer 는 Eden 영역에 할당 된 마지막 객체를 <u>추적한다</u>. Eden 영역의 top (가장 위)에 마지막 객체가 있는데, 새로운 객체가 생성된다면 해당 객체의 크기가 Eden 영역에 삽입될 수 있는지 여부만을 확인한다. Eden 영역에 할당 할 수 있는 크기라면 넣고, 해당 새로운 객체가 top에 존재하게 된다. 즉, new 객체 생성은 마지막에 추가된 객체만 점검하면 되기에 빠른 메모리 할당이 가능해진다.
+
+Multi-Thread 환경해서는 다른 문제가 발생한다. Thread-Safe 하기 위해 여러 thread를 사용하는 객체를 Eden 영역에 저장할 때는, 해당 thread에 lock (락)이 발생하게 되고, 이런경우 lock-contention 때문에 성능이 떨어지는데, 이를 해결하기 위한 방법이 TLABs 이다.
+
+TLABs 는 스레드가 각각의 몫에 해당하는 Eden 영역의 작은 덩어리를 가질 수 있도록 하는 것이다.
