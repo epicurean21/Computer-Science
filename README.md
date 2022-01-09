@@ -7,7 +7,7 @@
 - [Open_Source](./Open_Source)
   - Python
   - Git
-    - GitHub Pull Request
+    - GitFlow
   - NumPy
   - Pandas
   - Linux and Shell
