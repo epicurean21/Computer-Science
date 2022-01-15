@@ -13,6 +13,7 @@
   - Linux and Shell
   - Docker
   - Redis
+  - Kafka - apache Kafka
 
 
 

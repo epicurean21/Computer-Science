@@ -2,26 +2,21 @@
 
 - Python
   - [Python](/Python.md)
-  
 - OpenSource Software [OSS]
   - Free Software & Open Source Software
   - Licenses
   - [OSS](/OSS.md)
-  
 - OSS Tools
   - [OSS Tools](/OSS%20Tools.md)
-  
 - Git
   - What is Git 
   - Git commands [Terminal commands]
   - [Git](/Git.md)
-  
 - GitHub
   - Remote Repository & Local Repository
   - Backup & Collaboration
   - [GitHub](/GitHub.md)
   - [Git Flow](./Git_Flow)
-  
 - NumPy
   - [NumPy (I)](./NumPy(I).md)
     - What is NumPy and Why we need it
@@ -34,7 +29,6 @@
     - Linear Algebra
     - Pseudorandom Number Generation
       - example) Random Walks
-  
 - Pandas
   - [Pandas (I)](/Pandas(I).md)
     - What is Pandas ?
@@ -50,7 +44,6 @@
     - Reduction or Summary Statistics
     - Correlations and Convariance 
     - Unique Values, Value Counts, and Membership
-
 - Linux Commands and Shell Programming
   - [Shell](./Shell.md)
     - Shell
@@ -88,11 +81,12 @@
     - Conditional Construct
       - If statement
       - Case statement
-
 - Docker
   - [Docker](./Docker.md)
     - What is Docker
     - How to user it
-
 - Redis
   - [Redis](./Redis.md)
+- Kafka
+  - [Kafka](./Kafka.md)
+
