@@ -101,6 +101,14 @@ implementation 'org.junit.jupiter:junit-jupiter:5.8.2'
 
 
 
+- **@ExtendWith(MockitoExtension.class)**: 테스트 클래스가 Mockito를 사용함을 의미합니다.
+- **@Mock**: 실제 구현된 객체 대신에 Mock 객체를 사용하게 될 클래스를 의미합니다. 테스트 런타임 시 해당 객체 대신 Mock 객체가 주입되어 Unit Test가 처리됩니다.
+- **@InjectMocks**: Mock 객체가 주입된 클래스를 사용하게 될 클래스를 의미합니다. 테스트 런타임 시 클래스 내부에 선언된 멤버 변수들 중에서 @Mock으로 등록된 클래스의 변수에 실제 객체 대신 Mock 객체가 주입되어 Unit Test가 처리됩니다.
+
+- **Given**: 테스트를 위한 준비 과정입니다. 변수를 선언하고, Mock 객체에 대한 정의도 함께 작성합니다.
+- **When**: 테스트를 실행하는 과정입니다. 테스트하고자 하는 내용을 작성합니다.
+- **Then**: 테스트를 검증하는 과정입니다. 예상한 값과 결괏값이 일치하는 지 확인합니다.
+
 ### General Annotations
 
 - @BeforeAll & @BeforeEach
