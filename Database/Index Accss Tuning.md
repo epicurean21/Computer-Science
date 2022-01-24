@@ -31,7 +31,7 @@ Index root 부터 시작해서, branch를 지나 leaf로 오면, **Hash Bucket**
 
 
 
-즉 내가 원하는 데이터를 찾는 과정
+즉 내가 원하는 데이터를 Index를 통해 찾는 과정에서의 Overhead
 
 1. Index root 부터 leaf 까지 탐색
 2. leaf에 나온 Hash 값을 통해 hash bucket 을 탐색한다. 이때 Latch에 의해 lock이 걸려 있으면 <u>cache buffer chain</u> 에 의해 기다린다.
@@ -47,7 +47,7 @@ LRU [Least Recently Used] 형식의 알고리즘에 의해서, LRU List 등록�
 
 
 
-가장 중요한 내용은 Index를 통한 scan은 생각보다 고비용이다.
+<u>가장 중요한 내용은 Index를 통한 scan은 생각보다 고비용이다.</u>
 
 - 여러가지 경합이 발생된다 - atomic 보장을 위해
 
@@ -165,7 +165,7 @@ LRU [Least Recently Used] 형식의 알고리즘에 의해서, LRU List 등록�
 
 ![sqlTuning](img/IndexAcces/sqlTuning.png)
 
-
+- 여러가지 튜닝 방향이 있다.
 
 
 

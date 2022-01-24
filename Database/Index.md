@@ -1,5 +1,10 @@
 ## Index의 기본 
 
+![wisit](./img/index/wisit.png)
+
+- 우리가 JDBC를 통해 데이터를 가져온다 해 보자.
+- DB에서 우리가 원하는 정보 (데이터)가 왔다갔다 할 때는 그것만의 **단위**가 존재한다.
+
 
 
 ![blockandpage](./img/index/blockandpage.png)
@@ -85,13 +90,13 @@ Ebbe를 찾는다고 생각 해 보자 !
 >
 > ![search](./img/index/search.png)
 
-
+- 혼자 생각 해 봤을 때 이건 그냥 알고리즘의 이분 탐색이랑 똑같다 .
 
 #### Index의 비효율성
 
 - 데이터가 너무 과도하게 많은 경우
   - Depth 는 index 스캔 효율이 악화되지만
-  - 이 경우 Tree 의 Depth 를 늘리면 성능적으로 크게 걱정하지 않아도 된다.
+  - **이 경우 Tree 의 Depth 를 늘리면 성능적으로 크게 걱정하지 않아도 된다.**
     - 즉 Branch Block을 더 다음 레벨로 이어서 만든다는 것
   - <u>BLevel</u>: B*-Tree level, Root Block 에서 Leaf Block 까지의 깊이를 의미. 만약 0 이라면 Root Block 과 Leaf Block 이 같다는 의미.
 - 데이터의 길이가 길어지는 경우
@@ -216,7 +221,8 @@ Ebbe를 찾는다고 생각 해 보자 !
 
   ![fastFullScan](./img/index/vs.png) 
 
-
+- Index Fast Full Scan은 multithread로 나누어서 구분별로 읽어내기 때문에 전체 탐색에 있어서 Index Full Scan 보다 빠르다.
+- 단, 정렬된 데이터를 필요로 할 때 Index Full Sacn을하면, 추가로 정렬을 진행하는 overhead가 있다.
 
 ### IOT (Index Organized Table)
 
