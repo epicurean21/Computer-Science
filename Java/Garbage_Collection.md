@@ -143,6 +143,12 @@ TLABs 는 스레드가 각각의 몫에 해당하는 Eden 영역의 작은 덩�
 
 
 
+### GC와 성능
+
+Minor GC의 경우 보통 0.5초내에 끝나기 때문에 큰 문제가 되지 않는다. 하지만 Full GC는 조심해야 한다. Full GC가 발생해서 3초정도 멈춰있는 동안 사용자의 요청이 큐에 쌓이게 된다. 그리고 Full GC 가 끝난 후 요청을 한꺼번에 처리하게 되면 과부하가 발생할 수 있다. 그래서 Full GC 를 관리하는 방법이 중요하다.
+
+
+
 #### Serial GC (-XX:+UseSerialGC)
 
 
@@ -150,5 +156,3 @@ TLABs 는 스레드가 각각의 몫에 해당하는 Eden 영역의 작은 덩�
 #### Parallel GC (-XX:+UseParallelGC)
 
 
-
-#### 
