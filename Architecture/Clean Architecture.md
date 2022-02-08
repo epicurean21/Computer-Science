@@ -1,6 +1,8 @@
 # Clean Architecture
 
-### 계층형 아키텍처의 문제는 무엇일까?
+[TOC]
+
+## Chapter 01. 계층형 아키텍처의 문제는 무엇일까?
 
 ![layerArchitecture](./img/layerArchitecture.png)
 
@@ -31,3 +33,57 @@
 
 
 
+
+
+
+
+## Chapter 02. 의존성 역전하기
+
+
+
+### SOLID 원칙
+
+- S [Single Responsibility Principal]: 단일 책임 원칙
+  - 모든 클래스는 각각 하나의 책임만 가져야 한다. 즉 클래스는 그 책임을 캡슐화 해야함.
+- O [Open closed principle]: 개방 폐쇄 원칙
+  - 확장에는 Open, 수정에는 Closed. 기존의 코드는 변경하지 않으면서 기능을 추가할 수 있도록 설계한다
+- L [Liskov Substitution Principle]: 리스코프 치환 원칙
+  - 자식 클래스는 언제나 자신의 부모 클래스를 대체할 수 있어야 한다. 
+- I [Interface Segregation Principle]: 인터페이스 분리 원칙
+  - 한 클래스에는 자신이 사용하지않는 인터페이스는 구현하지 말아야 한다.
+- D [Dependency Inversion Principle]: 의존성 역전 원칙
+  - 클라이언트는 추상화 (인터페이스)에 의존해야 하며, 구체화에 의존해서는 안된다.
+
+
+
+### 단일 책임 원칙 [Single Responsibility Principle]
+
+- 하나의 컴포넌트는 오로지 한 가지 일만 해야 하고, 그것을 올바르게 수행해야 한다
+- **컴포넌트를 변경하는 이유는 오직 하나뿐이어야 한다**
+
+<img src="./img/solid.jpeg" alt="solid" style="zoom:50%;" /> 
+
+- 각 컴포넌트의 의존성은 이 컴포넌트를 변경하는 이유 하나씩에 해당한다.
+- 전이 의존성인 경우도 해당 (점선 부분)
+
+
+
+### 의존성 역전 원칙 [Dependency Inversion Principle]
+
+- **코드상의 어떤 의존성이든 그 방향을 바꿀 수(역전시킬 수) 있다**
+- 계층형 아키텍처에서 항상 아래 계층으로 향하는 의존성을 반대로 역전
+  - 고수준에서 변경할 일이 더 많으므로 도메인 계층 변경 → 영속성 계층 변경 → 영속성 계층에 의존하는 잠재적인 도메인 계층 변경이 발생
+  - 영속성 코드가 바뀐다고 도메인 계층을 바꾸고 싶지 않음
+  - 의존성을 반대로 역전시켜 도메인 계층의 영속성 계층 의존성을 제거
+
+Before:
+
+<img src="./img/dip1.jpeg" alt="dip1" style="zoom:50%;" /> 
+
+After:
+
+ <img src="./img/dip2.jpeg" alt="dip1" style="zoom:50%;" />
+
+- 영속성, 도메인 계층에 각각 엔티티가 존재
+- 도메인 계층에 리포지토리 인터페이스를 만들고, 영속성 계층에서 구현체를 만듬
+- 도메인 로직을 영속성 코드의 의존성으로부터 해방
