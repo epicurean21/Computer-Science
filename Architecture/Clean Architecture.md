@@ -142,4 +142,96 @@ After:
 
 
 
+### 계층으로 구성하기
+
+![layer](./img/layer.jpg)
+
+- 웹, 도메인, 영속성 계층 각가 web, domain, persistence package로 구성
+- DIP 원칙을 적용하여 domain 패키지에는 도메인 코드만 존재
+  - AccountRepository는 interface로 구성
+  - persistence package에서 AccountRepositoryImpl class 배치(domain inteface 구현체)
+
+
+
+#### 이게 최적화가 아닌 이유
+
+- 기능 조각(functional slice) 또는 특성(feature)을 구분할 수 있는 패키지 경계가 없음
+  - 사용자 관리 기능 추가하는 경우, 각 layer마다 다음과 같이 추가될 수 있음
+    - web : UserController
+    - domain : UserService, UserRepository, User
+    - persistence : UserRepositoryImpl
+  - Account, User와 같이 서로 연관되어 있지 않은 클래스들이 묶이는 상황 발생
+- 어떤 유즈케이스가 있는지 파악이 불가능
+  - Layer에 있는 클래스를 직접적으로 확인해야 어떤 유즈케이스가 구현되어 있는지 파악 가능
+- 패키지 구조만으로 우리가 목표로 하는 아키텍처(육각형 아키텍처) 파악이 불가능
+  - Incoming port / outgoing port를 직접적으로 확인할 수 없음 (코드를 뒤져야함)
+
+
+
+### 기능으로 구성하기
+
+![serviceLAyer](./img/serviceLAyer.jpg) 
+
+
+
+- 계좌와 관련된 모든 코들를 account package에 넣고, 계층 패키지를 모두 없앰
+- account package와 마찬가지로 기능을 묶을 때는 그와 같은 레벨의 package를 생성하여 추가
+- 외부에서 접근이 안되는 클래스들은 package-private(default) 접근 수준을 이용하여 패키지간의 경계를 강화
+
+- SendMoneyService : 송금하기 유즈케이스를 구현한 코드. 클래스명에서 어떤 일을 하는 알 수 있기 때문에, Uncle Bob은 이런 것을 소리치는 아키텍처(Screaming architecture)라고 명명.
+
+
+
+### 표현력 있는 패키지 구조 (목표)
+
+![hexagonalArchitecture](./img/hexagonalArchitecture.jpg)
+
+- 육각형 아키텍쳐에서 핵심 요소 : 엔티티, 유스케이스, 인커밍/아웃고잉 포트, 인커밍/아웃고잉 어댑터
+- account : Account와 관련한 유스케이스를 구현한 모듈 패키지
+- domain : 도메인 모델이 속해있는 패키지
+- application : 도메인 모델을 둘러싼 서비스 계층
+  - port : 외부와 통신하기 위한 인터페이스 패키지 (의존성)
+    - in : 외부(웹등)에서 서비스 요청을 하기 위한 인터페이스. 서비스 계층에서 해당 인터페이스를 구현함
+    - out : 서비스에서 외부(영속성)에 요청을 하기 위한 인터페이스. adapter에서 해당 인터페이스를 구현함
+- adapter
+  - in : 애플리케이션 계층의 인커밍 포트를 호출하는 패키지
+  - out : 애플리케이션 계층의 아웃고잉 포트에 대한 구현을 제공하는 패키지
+
+#### 장점
+
+- 패키지 구조 자체가 육각형 아키텍쳐를 그대로 반영하는 구조
+  - 아키텍쳐-코드 갭(architecture-code gap), 모델-코드 갭(model-code gap)이 거의 없는 구조
+  - 기능 작업시, 패키지 선택 장애가 육각형 아키텍쳐에서는 거의 없음
+- package간에 불필요한 접근을 막을 수 있는 구조
+  - adapter : application/port를 통해서만 호출되는 구조 -> package-private 접근 수준으로 막을 수 있음 (IDE단에서 잘못된 접근을 통제 가능)
+  - application, domain
+    - port : adapter에서 접근 가능해야함 -> public
+    - domain : adapter에서 접근 가능해야함 -> public
+    - service : adapter에서 직접 접근할 필요가 없음 -> package-private
+- adapter 내부 변경은 adapater 내부에서 처리가능
+  - SQL -> Key-Value DB로 변경하는 경우, adapter내에서 아웃고잉 port 인터페이스를 구현하면 끝
+- DDD에 직접적으로 대응 가능
+  - account : 다른 바운디드 컨텍스트와 통신할 전용 진입점과 출구(포트)를 포함하는 바운디드 컨텍스트임
+  - \* bounded context : 어떤 하나의 도메인 모델이 적용되는 범위를 나타냄
+
+
+
+### 의존성 주입의 역할
+
+![di](./img/di.jpg) 
+
+- 클린 아키텍쳐의 가장 본질적인 요소 : 애플리케이션 계층이 인커밍/아웃고잉 어댑터에 의존성을 갖지 않는 점 (2장 설명)
+- 인커밍 어댑터 : adapter와 도메인 코드 간의 의존성 방향이 동일함. adapter -> application을 호출
+- 아웃고잉 어댑터 : 도메인 코드 -> adapter 의존성이 있기 때문에 의존성 역전 원칙을 이용해야함
+- 의존성 역전 방법 : application 계층에서 port 인터페이스를 만들고, adapter가 해당 인터페이스를 구현
+- 포트 인터페이스를 구현한 실제 객체를 누가 어플리케이션 계층에 제공해야하나?? -> 의존성 주입
+- 의존성 주입 : 모든 계층에 의존성을 가진 중립적인 컴포넌트 도입 (스프링) 
+  - 역할 : 대부분의 클래스를 초기화하는 역할을 맡음
+
+
+
+
+
+
+
 ## Chapter 05. 웹 어댑터 구현하기
