@@ -49,3 +49,10 @@ Computer Science Study ✏️
 
 - Database Architecture
 - Index
+
+
+
+### Architecture
+
+- [Clean Architecture](./Architecture/Clean%20Architecture)
+  - Hexagonal Architecture
