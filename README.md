@@ -54,5 +54,5 @@ Computer Science Study ✏️
 
 ### Architecture
 
-- [Clean Architecture](./Architecture/Clean%20Architecture)
+- [Clean Architecture](./Architecture/Clean%20Architecture.md)
   - Hexagonal Architecture
