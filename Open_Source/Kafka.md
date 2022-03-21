@@ -257,7 +257,30 @@ receive() 메소드를 호출하기만 해도 Flux로 받아드릴 준비가 된
 
 
 
-### 프로젝트에 어떻게 사용 될까?
+# Kafka Producer
+
+Producer (프로듀서)는 보통 Kafka Producer api와 그것으로 구성된 애플리케이션이다. 프로듀서는 broker (브로커)에 **특정 토픽을 지정하여 <u>메시지를 전달하는 역할을 담당한다.</u>** 
+
+프로듀서가 전달하는 메시지 구조는 다음과 같다.
+
+<img src="./readmeImg/kafka/producer/message.png" alt="message" style="zoom:50%;" />
+
+- 토픽 (Topic)
+- 토픽 중 특정 파티션 위치 (Partition)
+- 메시지 생성 시간 (Timestamp)
+- 메시지 키 (Key)
+- 메시지 값 (Value)
+
+
+
+### Producer Message 전달 과정
+
+![procedure](./readmeImg/kafka/producer/procedure.png)
+
+프로듀서는 메시지 전달 전 4 가지 과정을 통해 메시지를 브로커에 전달한다. 이는 **브로커에 메시지를 전송할수 있도록 변환 / 필요한 값을 지정해주는 작업** 이다.
+
+1. 직렬화 (Serializer)
+2. 파티셔닝 (Partitioner)
 
 
 
