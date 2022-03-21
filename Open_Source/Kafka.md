@@ -281,6 +281,14 @@ Producer (프로듀서)는 보통 Kafka Producer api와 그것으로 구성된 �
 
 1. 직렬화 (Serializer)
 2. 파티셔닝 (Partitioner)
+3. 메시지 배치 (Record Accumulator)
+4. 압축 (Compression)
+
+그 이후 전달 (sender)
+
+프로듀서는 먼저, 전달 요청받은 메시지를 직렬화합니다. 직렬화(Serialization)는 Serializer가 지정된 설정을 통해 처리하며, **메시지의 키와 값은 바이트 뭉치 형태로 변환됩니다.** 직렬화 과정을 마친 메시지는 Partitioner를 통해 **토픽의 어떤 파티션에 저장될지 결정됩니다.** 이 과정을 파티셔닝(Partitioning)이라 말합니다. Partitioner는 정의된 로직에 따라 파티셔닝을 진행하는데, 별도의 Partitioner 설정을 하지 않으면 Round Robbin 형태로 파티셔닝을 합니다. 즉, 파티션들에게 골고루 전달할 수 있도록 파티셔닝을 합니다. 다만, 이 과정은 메시지 전달 요청에 파티션이 지정되지 않았을 경우에만 진행됩니다. 따라서 메시지 전달 요청에 특정 파티션이 지정되었을 경우에는 별도의 파티셔닝 없이 해당 파티션으로 전달되도록 지정됩니다.
+
+출처: https://always-kimkim.tistory.com/entry/kafka101-producer [언제나 김김]
 
 
 
