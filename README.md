@@ -5,7 +5,7 @@ Computer Science Study ✏️
 
 ### Open Source
 
-- [Open_Source](./Open_Source)
+- [Open Source Software](./Open%20Source%20Software)
   - Python
   - Git
     - GitFlow
@@ -30,13 +30,13 @@ Computer Science Study ✏️
     - JVM (Java Virtual Machine)
   
   - Garbage Collection
-    - [Garbage Collection](./Java/Garbage_Collection.md)
+    - [Garbage Collection](./Java/Garbage%20Collection.md)
 
 
 
 ### Spring Framework
 
-- [Spring_Framework](./Spring_Framework)
+- [Spring_Framework](./Spring%20Framework)
   - Spring Boot MVC
   - Spring Boot WebFlux
     - Reactive Programming
