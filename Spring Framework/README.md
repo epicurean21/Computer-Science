@@ -33,6 +33,7 @@
 - ORM
 
   - [MyBatis](./ORM/MyBatis.md)
-
+  - [JPA](./ORM/JPA/README.md)
+  
   
 

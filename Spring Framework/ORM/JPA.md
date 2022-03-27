@@ -1,2 +1,0 @@
-# JPA [Java Persistence API] 
-
