@@ -32,7 +32,7 @@
 
 - ORM
 
-  - [MyBatis](./MyBatis.md)
+  - [MyBatis](./ORM/MyBatis.md)
 
   
 
