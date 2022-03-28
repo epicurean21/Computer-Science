@@ -86,6 +86,8 @@ private이 안되는 이유는 entity class에 사용되는 **proxy** 때문이�
 
 
 
+
+
 ### @AllargsConstructor
 
 모든 매개변수 생성자. **해당 클래스 내의 모든 변수값을 가진 생성자를 자동으로 만들어 준다.**
@@ -183,3 +185,27 @@ public class Addredss {
 
 
 
+```java
+@Data(staticConstructor = "of")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class testDto {
+    private final String id;
+    private final String userName;
+    private final String age;
+    private final String address;
+}
+```
+
+역 생성하지말고 of를 사용해서 만들라는 의미로. 사용 될 수 있다. 하지만 위의경우, private으로 생성자를 만들기에 충돌이 발생된다.
+
+```java
+@RequiredArgsConstructor(staticName = "of")
+public class testDto {
+    private final String id;
+    private final String userName;
+    private final String age;
+    private final String address;
+}
+```
+
+final 변수들에 대한 static factory method를 사용함과 동시에 private 한 생성자를 만들기 위해 위와같이 사용할 수 있다.
