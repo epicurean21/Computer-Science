@@ -1,6 +1,8 @@
 # Lombok Annotation
 
-### Lombok 이란? 
+[TOC]
+
+## Lombok 이란? 
 
 Lombok 프로젝트는 자바 라이브러리로 코드 에디터나 빌드 툴(IntelliJ, Eclipse, XCode 등)에 추가하여 코드를 효율적으로 작성할 수 있도록 도와준다. class명 위에 어노테이션을 명시해줌으로써 getter나 setter, equals와 같은 method를 따로 작성해야 하는 번거로움을 덜어준다.
 
@@ -127,6 +129,7 @@ public class testDto {
 - @Getter / @Setter
 - @ToString
 - @EqualsAndHashCode
+  - equals, hashCode 자동 생성. callSuper=true 옵션을 이용하여 부모 클래스 필드 값도 동일한지 체크하며, false면 자신 필드 값만 고려한다.
 - @RequiredArgsConstructor 
 
 위 다섯 가지를 합쳐놓은 종합 선물 세트라고 할 수 있다. POJO(Plain Old Java Objects)와 bean과 관련된 모든 보일러플레이트(boilerplate =재사용 가능한 코드)를 생성한다. class의 모든 필드에 대한 getter, setter, toString, equals와 같은 함수들 말이다.
@@ -209,3 +212,4 @@ public class testDto {
 ```
 
 final 변수들에 대한 static factory method를 사용함과 동시에 private 한 생성자를 만들기 위해 위와같이 사용할 수 있다.
+
