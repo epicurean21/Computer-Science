@@ -27,7 +27,10 @@ Spring Batch는 로깅/추적, 트랜잭션 관리, 작업 처리 통계, 작업
 만약 Spring Batch에서 배치가 실패하여 작업을 재시작한다면?
 
 - 처음부터가 아닌 **실패한 지점부터** 실행을 하게 된다.
+  - 예를 들어보자, 어마어마하게 처리해야 할 데이터가 있다. **5만번째에서 실패했다면, 5만 1번째부터 다시 실행**할 수 있다면 얼마나 좋을까? 이게 가능하다.
 - 또한, 중복 실행을 막기 위해 **성공한 이력이 있는 Batch는** <u>동일한 Parameter로 실행 시 Exception이 발생된다</u>
+  - 예를 들어, 오늘 아침 누군가가 집계 함수를 실행시켰는데, 다른 누군가가 또 실행시켜 집계 데이터가 2배로 뻥튀기 될 수도 있음.
+    **같은 파라미터로 같은 함수를 실행할 경우** 이미 실행한 적이 있어 실패하는 기능을 지원한다면 ?  이게 가능.
 
 
 
@@ -135,7 +138,32 @@ JobInstance는
 
 네 가지 형식만을 지원한다.
 
+##### Spring Batch에서의 Job Parameters
 
+Spring Batch의 경우, **동일 Job Parameter로 실행시** 어떻게 처리할지에 대한 옵션을 준다.
+
+- 해당 파라미터로 최근 실패한 이력이 있다면 이어서 실행할 것인지
+- 해당 파라미터로 최근 실패 혹은 성공한 이력이 있다면 실행하지 않을 것인지
+- 해당 파라미터로 최근 실행한 이력이 있어도 무시하고 다시 실행할 것인지
+
+동일 Job Parameter로 계속 실행이 되는 방법은 무엇일까?
+
+1. Run Incrementer
+
+   - 동일 파라미터인데 **다시 실행하고 싶을 때** 사용하라는 의미로 run incremeter가 제공된다.
+
+     ```java
+     public Job job() {
+       return jobBuilderFactory.get(JOB_NAME)
+         			.start(step())
+         			.incremeter(new RunIncremeter())
+         			.build();
+     }
+     ```
+
+   - 이러면 Job Parameter외에 인자로 run.id 의 임의 parameter를 추가로 사용해 run.id값을 변경하면서 사용한다.
+
+   - 즉, 매 수행마다 run.id가 변경되니 재실행 할 수 있게 되는 것.
 
 #### JobExecution
 
