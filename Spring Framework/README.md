@@ -28,7 +28,7 @@
   - R2DBC
   - Multiplex & NIO
   
-- [Spring Batch](./Spring%20Batch)
+- [Spring Batch](./Spring%20Batch.md)
 
 - ORM
 

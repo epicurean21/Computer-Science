@@ -40,6 +40,7 @@ Computer Science Study ✏️
   - Spring Boot MVC
   - Spring Boot WebFlux
     - Reactive Programming
+  - Spring Batch
   - [ORM](./Spring%20Framework/ORM/README.md)
     - MyBatis
     - JPA
