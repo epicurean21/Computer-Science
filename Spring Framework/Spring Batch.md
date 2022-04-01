@@ -165,6 +165,8 @@ Spring Batch의 경우, **동일 Job Parameter로 실행시** 어떻게 처리�
 
    - 즉, 매 수행마다 run.id가 변경되니 재실행 할 수 있게 되는 것.
 
+
+
 #### JobExecution
 
 Job Execution은 Job Instance에 대한 실행 시도에 대한 객체이다. 
@@ -325,6 +327,52 @@ public class ExampleJobConfig {
 }
 ```
 
+- ```java
+  @Configuration
+  ```
+
+  - Spring Batch의 모든 Job은 `@Configuration`으로 등록해서 사용합니다.
+
+- ```
+  jobBuilderFactory.get("exampleJob")
+  ```
+
+  - `exampleJob` 이란 이름의 Batch Job을 생성합니다.
+  - job의 이름은 별도로 지정하지 않고, 이렇게 Builder를 통해 지정합니다.
+
+- ```
+  stepBuilderFactory.get("step")
+  ```
+
+  - `step` 이란 이름의 Batch Step을 생성합니다.
+  - `jobBuilderFactory.get("step")`와 마찬가지로 Builder를 통해 이름을 지정합니다.
+
+- ```
+  .tasklet((contribution, chunkContext))
+  ```
+
+  - Step 안에서 수행될 기능들을 명시합니다.
+  - *Tasklet*은 **Step안에서 단일로 수행될 커스텀한 기능**들을 선언할때 사용합니다.
+  - 여기서는 Batch가 수행되면 `RepeatStatus.FINISH` 가 리턴되도록..
+
+
+
+#### Job, Step, Tasklet/Reader&Processor&Writer
+
+Batch Job을 생성하는 **exampleJob 코드를 보면 step을 품고 있음**을 알 수 있습니다.
+Spring Batch에서 **Job은 하나의 배치 작업 단위**를 얘기한다.
+Job 안에는 아래처럼 여러 Step이 존재하고, Step 안에 Tasklet 혹은 Reader & Processor & Writer 묶음이 존재한다.
+
+<img src="./img/SpringBatch/jobStepTasklet.png" alt="jobStepTasklet" style="zoom:50%;" />
+
+Job안에 여러 Step이 있다는건 쉽게 이해되지만, Step이 품고 있는 단위가 애매하게 보이실 수 있다.
+
+**Tasklet 하나와 Reader & Processor & Writer 한 묶음이 같은 레벨**입니다.
+그래서 **Reader & Processor가 끝나고 Tasklet으로 마무리 짓는 등으로 만들순 없다**는걸 꼭 명심해야한다.
+
+> Tasklet은 어찌보면 Spring MVC의 `@Component`, `@Bean`과 비슷한 역할이라고 보셔도 될 것 같습니다.
+> 명확한 역할은 없지만, 개발자가 지정한 커스텀한 기능을 위한 단위로 보시면 됩니다.
+
 
 
 ### 다중 Step 구성하기
@@ -448,6 +496,6 @@ Paging Size와 Chunk Size에는 관계가 있다.
 ## References:
 
 1. [Spring Batch란?](https://khj93.tistory.com/entry/Spring-Batch%EB%9E%80-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B3%A0-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
-
 2. [Spring Batch 구조와 구성 요소](https://deeplify.dev/back-end/spring/batch-architecture-and-components)
+3. [Spring Batch 가이드](https://jojoldu.tistory.com/325?category=902551)
 
