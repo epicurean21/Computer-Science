@@ -55,11 +55,11 @@ public interface BankClient {
 
 ```yaml
 feign:
-	client:
-		config:
-			bank:
-				name: LINEPLUS
-				url: https://line.com:8080
+  client:
+    config:
+      bank:
+        name: LINEPLUS
+        url: https://line.com:8080
 ```
 
 매우 간단하게 client를 생성할 수 있다. 
