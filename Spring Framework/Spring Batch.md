@@ -429,6 +429,36 @@ public class ExampleJobConfig {
 }
 ```
 
+Job 구성 클래스 외부에 tasklet 클래스를 만들어서 참조하는 방식
+
+1) Step에서 chunk() 대신 tasklet()을 사용하는 것이다.
+2) tasklet은 외부 클래스를 만들고 tasklet 작업을 정의한다.
+3) tasklet 작업을 정의한 외부 클래스에서는 기본적으로 Tasklet을 implements 받아서 구현을 해야한다. 그에 따라 execute 메서드를 구현해야 한다.
+   - execute 메서드 인자 contribution/chunkContext
+     - contribution - 현재 단계 실행을 업데이트하기 위해 다시 전달되는 변경 가능한 상태
+     - chunkContext - 호출 간에는 공유되지만 재시작 간에는 공유되지 않는 속성
+
+
+
+### Tasklet vs. Chunk
+
+Tasklet로는 단순하게 처리할 수 있는 장점이 있으나, 대 용량을 감당하기엔 부하를 감당할 수 없다. 따라서 Chunk를 통해 쪼개서 넣을 필요가 있는데, Tasklet로도 쪼개서 넣을 수 있지만, 가독성에서 떨어지기 때문에 권장하지 않음.
+현재 사용하고 있는 실무에서도 대용량은 Chunk를 적극 사용하고 있다.
+
+
+
+Tasklet을 사용한 Task 기반 처리
+
+- 배치 처리 과정이 비교적 쉬운 경우 쉽게 사용
+- 대량 처리를 하는 경우 더 복잡
+- 하나의 큰 덩어리를 여러 덩어리로 나누어 처리하기 부적합
+
+Chunk를 사용한 chunk(덩어리) 기반 처리
+
+- ItemReader, ItemProcessor, ItemWriter의 관계 이해 필요
+- 대량 처리를 하는 경우 Tasklet 보다 비교적 쉽게 구현
+- 예를 들면 10,000개의 데이터 중 1,000개씩 10개의 덩어리로 수행
+
 
 
 ### Chunk
