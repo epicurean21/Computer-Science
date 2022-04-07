@@ -32,6 +32,6 @@
   - [MyBatis](./ORM/MyBatis.md)
   - [JPA](./ORM/JPA/README.md)
   
-- [Spring Cloud](./Spring%20Cloud)
-  - Open Feign
+- [Spring Cloud](./Spring%20Cloud/README.md)
+  - OpenFeign
 
