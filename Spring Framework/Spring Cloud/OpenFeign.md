@@ -426,6 +426,58 @@ public class FooConfiguration {
 
 
 
+#### Request 요청
+
+> Header에 값 설정하기 !
+
+RestTemplate을 사용했다면, token 등 header에 값을 추가하고 싶을 때 getInterceptors 를 사용하고 HttpHeader를 사용해서 설정했을 수 있다.
+
+FeignClient의 request header에 값을 넣기 위해서는, 위에서 설명한 configuration을 생성하여 Bean으로 등록하고 (말했다시피 @Configuration으로 등록되어서는 안된다..!) Feign Client설정에 configuration=Configuration.class 로 지정해 줄 수 있다.
+
+1. 첫 번째 방법 - Configuration 사용
+
+   ```java
+   public class HeaderConfiguration {
+     	@Bean
+     	public RequestInterceptor requestInterceptor() {
+         	return requestTemplate -> requestTemplate.header("header", "header1", "header2");
+       }
+   }
+   ```
+
+   - Configuration
+
+   ```java
+   @FeignClient(value = "testFeign", url = "http://test.com/", configuration = {HeaderConfiguration.class})
+   public interface testClient {
+     	...
+   }
+   ```
+
+   - testClient
+
+   Header 값을 설정할 configuration class를 생성하고, 그곳에서 RequestInterceptor를 생성한다.
+
+   원하는 Feign client에 해당 configuration class를 설정해준다.
+
+   
+
+2. 두 번째 방법 - annotation 이용
+
+   ```java
+   @GetMapping(value = "/status/", headers = "key2=value2")
+   void status2(@PathVariable("status") int status);
+   
+   @GetMapping(value = "/status/")
+   void status3(@RequestHeader("key3") String headers, @PathVariable("status") int status);
+   
+   @org.springframework.web.bind.annotation.GetMapping(value = "/status/")
+   @feign.Headers("key3: value3")
+   void status4(@PathVariable("status") int status);
+   ```
+
+
+
 
 
 ### References
