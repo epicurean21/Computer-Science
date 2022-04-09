@@ -179,6 +179,50 @@ feign:
 
 
 
+### Feign Client with parameters
+
+Feign Client에서 parameter (ex. PathVariable, RequestParam, RequestBody) 가 존재한다면 어떻게 할까?
+
+```java
+@RequiredArgsConstructor
+@RestController
+@RequestMappring("/v1")
+public TestController {
+  	private final UserService userService;
+  
+  	@GetMappring("/test/{testId}")
+ 		public String getName(@PathVariable Long testId) {
+      	return userService.getById(testId);
+    } 
+  
+  	@GetMapping("/test")
+  	public String getEmail(@RequestParam Long testId) {
+      	return userService.getEmailById(testId);
+    }
+  
+  	@GetMapping("/test")
+  	public Friend getUserFriend (@RequestBody V1User user) {
+				return userService.getUserFriend(user);
+    }
+}
+```
+
+다음과 같은 controller에 요청을 보낸다 하다
+
+
+
+1. Path Variable
+
+   ```java
+   @FeignClient(name = "test", url = "/v1")
+   public interface feignClient {
+     	@GetMapping("/test/{testId}")
+     	public String getName(@PathVariable Long id);
+   }
+   ```
+
+   
+
 ### Feign Configuration
 
 FeignClient에는 기본으로 제공하는 configuration이 존재한다. 그렇기에 별도의 configuration 없이도 위 예제와 같이 바로 사용이 가능하다.
