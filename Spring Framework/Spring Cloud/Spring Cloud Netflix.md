@@ -39,7 +39,7 @@ MSA 구조에서 서비스를 **동적**으로 확장하고 축소되기도 한�
 
 만약 신규 서비스가 추가되거나, 줄여야 하는 상황이면 다시 수동으로 작성과 관리를 해주어야 하며, 특정 서비스에 장애가 발생하면 그 서비스를 수동으로 제외시켜야 한다. 즉 엄청난 운영 리소스가 들어갈 것이다.
 
-
+<img src="./img/SpringCloudNetflix/EurekaHowItWorks.png" alt="EurekaHowItWorks" style="zoom:67%;" />
 
 *Eureka*는 이러한 서비스들의 목록들을 자동으로 관리해 준다 !
 
@@ -49,7 +49,65 @@ MSA 구조에서 서비스를 **동적**으로 확장하고 축소되기도 한�
 
 
 
+##### Eureka Enabled 된 Spring Cloud Application
+
+- Server 시작 시 Eureka 서버에 자동으로 자신의 상태를 등록한다 (UP)
+- 주기적 Heartbeat로 Eureka Server에 자신이 살아 있음을 알린다
+- Server 종료 시 Eureka 서버에 자신의 상태 변경(Down)을 알리거나, 혹은 목록에서 삭제한다
+- Eureka 상에 등록된 이름은 `spring.application.name` 
 
 
 
+### Ribbon
+
+*Client Side Load Balancer*
+
+`Ribbon` 은 Netflix가 만든 *Software Load Balancer*를 내장한 RPC (REST) Library 이다.
+
+기존의 Monolithic Architecture를 지향한 시스템에서는 부하 분산을 위해 L4 스위치 같은 하드웨어 장비를 앞단에 두고 내부 서버로의 트래픽을 분산하였었다. 하지만 이렇게 중앙 집중화된 방식은 Load balancer에 문제가 발생하면 전체 서비스에 문제가 생기는 위험이 존재한다. 
+
+또한, 동적으로. 서버가 추가/삭제 되는 환경에서 하드웨어 장비로 대응하는것도 한계가 있다.
+
+그렇기에 Netflix는 ***Software로 구현한 Client Load banlancer인 Ribbon을 개발하였다.***
+
+- 참고로 이때 Client의 의미는 PC/Mobile Device가 아닌, MSA에서 다른 서비스를 호출하는 Client service를 뜻한다.
+
+<img src="./img/SpringCloudNetflix/RibbonClient.png" alt="RibbonClient" style="zoom:80%;" />
+
+
+
+Eureka와 연동하여 동적으로 리스트를 관리하면서 부하 분산이 가능하다.
+
+사용 가능한 부하 분산 Algorithm으로는
+
+- Round-Robin 
+- Weigted Response Time (응답 시간에 가중치를 두고 선택하는 방식)
+- Availabilty Filtering (3회 연속 호출 실패 시 30초 동안 목록에서 제외)
+- Zone-aware round-robin
+- Random load balancing
+
+등이 존재한다.
+
+
+
+*Spring Cloud에서는 Ribbon Client를 사용자가 직접 사용하지 않는다 !*
+
+- Spring Cloud 내의 HTTP 통신이 필요한 요소에 내장되어 있다.
+  - Zuul API Gateway
+  - RestTemplate (@LoadBalanced annotation)
+  - Spring Cloud Feign - 선언적 Http Client
+
+
+
+
+
+### Zuul - API Gateway
+
+Zuul은 Netflix가 개발한 spring-cloud-netflix에 특화된 API Gateway이다.
+
+API-Gateway는 사용자의 요청을 적절한 서비스로 프록시/라우팅 하는 MSA의 컴포넌트이다.
+
+##### [API Gateway란?](https://velog.io/@youngerjesus/API-Gateway%EC%9D%98-%EC%9D%B4%ED%95%B4)
+
+> API Gateway는 모든 서버로의 요청을 단일지점을 거쳐서 처리하도록 한다. 이를 통해 공통된 로직 처리나 인증 및 인가 처리, 라우팅 처리등을 할 수 있다.
 
