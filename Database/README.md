@@ -6,3 +6,6 @@
    - [Index Access Tuning](./Index%20Accss%20Tuning.md)
    - [Join Tuning](./Join%20Tuning.md)
    - [Sort Tuning](./Sort%20Tuning.md)
+
+2. [Redis](./Redis.md)
+

@@ -15,7 +15,7 @@ Redis (Remote Dictionary Server) 란 다음 특징의 data Structure 이다
 
 #### Redis의 등장배경
 
-<img src="./readmeImg/redis/Capacity.png" alt="Capacity" style="zoom:50%;" /> 
+<img src="./img/redis/Capacity.png" alt="Capacity" style="zoom:50%;" /> 
 
 서비스가 커지면서 필연적으로 발생하게 되는 과도한 DB 연결과 방대해지는 DB의 사이즈로 인해 발생하는 성능 저하를 극복하기 위해 캐시(Cache)를 사용한다.  캐시는 휘발성 데이터로 용량이 크진 않지만 데이터를 읽고 쓰는 속도가 굉장히 빠르므로 자주 요청되는 데이터만을 저장하여 활용한다. 
 
@@ -78,7 +78,7 @@ Redis (Remote Dictionary Server) 란 다음 특징의 data Structure 이다
 
 이런 맥락에서 캐시는 **나중에** **요청된** **결과를** **미리** **저장해두었다가** **빨리** **제공하기** **위해** 사용한다.
 
-<img src="./readmeImg/redis/cache.png" alt="cache" style="zoom:50%;" /> 
+<img src="./img/redis/cache.png" alt="cache" style="zoom:50%;" /> 
 
 [출처: https://velog.io/@hyeondev/Redis-란-무엇일까]
 
@@ -105,7 +105,7 @@ Redis (Remote Dictionary Server) 란 다음 특징의 data Structure 이다
 
 ### Redis가 Process를 처리하는 과정
 
-<img src="./readmeImg/redis/packer.png" alt="packer" style="zoom67%;" /> 
+<img src="./img/redis/packer.png" alt="packer" style="zoom67%;" /> 
 
 TCP 에서는 패킷이 끊어져서 올 수 있다. 이럴때 패킷이 들어와서 명령 하나를 실행시키는 과정이 어떻게 수행되는지 정리하였다.
 
@@ -124,7 +124,7 @@ TCP 에서는 패킷이 끊어져서 올 수 있다. 이럴때 패킷이 들어�
 이러한 동작 과정에서 알 수 있듯 **Redis 는 한번에 하나의 명령만 실행할 수 있기 때문에 긴 처리시간을 요하는 명령어를 쓰면 불리하다**. 그럼 보통 '긴' 명령이 될 수 있는, 대표적인 O(N) 명령들은 무엇이 있을까.
 
 - KEYS : 모든 아이템을 순회하는 명령이다. 하지만 아이템이 많아지면 서버에서 exception 을 트리거하니 주의해야한다.
-   
+  
    예를 들어, Key 가 백만개 이상인데 확인을 위해 KEYS 명령을 사용하는 경우는 결국 모니터링 스크립트가 일초에 한번씩 이걸 호출하게 되는 것이다. 
 
 - - KEYS 대신 scan **명령을 사용하는 것으로 하나의 긴 명령을 짧은 여러번의 명령으로 바꿀 수 있다.** 이 짧은 명령들 텀 사이에 다른 get / set 같은 명령들을 또 실행시킬 수 있다. 이 사이에 굉장히 처리를 잘 시켜준다.
@@ -145,7 +145,7 @@ implementation 'org.springframework.boot:spring-boot-starter-data-redis’
 
 implementation 'it.ozimov:embedded-redis:0.7.2'
 
-<img src="./readmeImg/redis/opsForValue.png" alt="opsForValue" style="zoom:50%;" /> 
+<img src="./img/redis/opsForValue.png" alt="opsForValue" style="zoom:50%;" /> 
 
 RedisTemplate: RedisTemplate : Redis Command 를 도와주는 Template
 

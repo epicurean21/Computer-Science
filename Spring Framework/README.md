@@ -26,6 +26,11 @@
   - Redis
   - R2DBC
   - Multiplex & NIO
+
+
+
+### Spring Related (Micro Service Architecture)
+
 - [Spring Batch](./Spring%20Batch.md)
 - ORM
 
@@ -39,4 +44,7 @@
     - Ribbon
     - Hystrix
     - Zuul
+  
+
+- [Kafka](./Kafka.md)
 

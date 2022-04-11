@@ -16,7 +16,7 @@
 
 Kafka를 알아보기 전에, kafka에서 사용되는 Message broker (ex. Zookeeper, Kafka Broker) 에 대해 알아보자.
 
-![messageBroker](./readmeImg/kafka/messageBroker.png)
+![messageBroker](./img/kafka/messageBroker.png)
 
 Message broker (사진 중간)은, Publisher (송신자, Producer) 로 부터 전달받은 메시지를, Subscriber (수신자, Consumer)로 전달해주는 중간 역할로, 소프트웨어 간에 메시지를 교환할 수 있게한다. 이 publisher로 부터 전달된 메시지가 저장되는 공간을 **Message queue**라고 하며, 메시지의 **그룹을 Topic**  이라 한다.
 
@@ -46,17 +46,17 @@ DB를 사용하는 경우 Query를 이용하여 원하는 데이터만 필터링
 
 #### Kafka Structure
 
-![253BF244550914E21A](./readmeImg/kafka/253BF244550914E21A.png)
+![253BF244550914E21A](./img/kafka/253BF244550914E21A.png)
 
 
 
-![img1.daumcdn](./readmeImg/kafka/img1.daumcdn.png)
+![img1.daumcdn](./img/kafka/img1.daumcdn.png)
 
 ​																								*대표적인 Kafka 구조*
 
 
 
-![pubsub](./readmeImg/kafka/pubsub.png)
+![pubsub](./img/kafka/pubsub.png)
 
 
 
@@ -85,7 +85,7 @@ Kafka는 **publish & subscribe**, 즉 발행/구독 모델을 기반으로 동�
 
 
 
-![topic](./readmeImg/kafka/SpringReactiveKafka/topic.png)
+![topic](./img/kafka/SpringReactiveKafka/topic.png)
 
 - **Topic**
   - Message를 구분하는 단위이다 !
@@ -109,7 +109,7 @@ Kafka는 **publish & subscribe**, 즉 발행/구독 모델을 기반으로 동�
 
 ### Producer & Consumer
 
-![img1.daumcdns](./readmeImg/kafka/img1.daumcdns.png)
+![img1.daumcdns](./img/kafka/img1.daumcdns.png)
 
 ##### Producer
 
@@ -143,7 +143,7 @@ Kafka는 **publish & subscribe**, 즉 발행/구독 모델을 기반으로 동�
 
 ## Spring Reactive Kafka
 
-![1](./readmeImg/kafka/SpringReactiveKafka/1.png)
+![1](./img/kafka/SpringReactiveKafka/1.png)
 
 대표적인 Kafka의 흐름이라 볼 수 있다. Producer가 stream에 publish 하고, Consumer는 이 stream을 subscribe해서 stream에 존재하는 데이터를 사용할 수 있다. 둘 중에 하나라도 없으면 시스템이 성립되지 않는다. 이 부분을 자세히 보니, 우리가 알고있는 **Reactive Programming** 과 매우 유사하다 !
 
@@ -151,7 +151,7 @@ ReactiveX의 **Observable**, Project Reactor 등에서 말하는 **Flux** 의 �
 
 그렇기에, 우리가 Kafka에서 구독하고 사용하는걸 **Flux**로 완전하게 대체가 가능하다 !
 
-![flux](./readmeImg/kafka/SpringReactiveKafka/flux.png)
+![flux](./img/kafka/SpringReactiveKafka/flux.png)
 
 - 나는 특정 Topic을 구독하면서 Flux로 받을래
 - 나는 Flux create를 하면서 데이터를 밀어넣어 주는 것 !
@@ -162,7 +162,7 @@ ReactiveX의 **Observable**, Project Reactor 등에서 말하는 **Flux** 의 �
 
 - Reactive Kafka Driver with Project Reactor
 
-![reactorKafka](./readmeImg/kafka/SpringReactiveKafka/reactorKafka.png)
+![reactorKafka](./img/kafka/SpringReactiveKafka/reactorKafka.png)
 
 - Maven/Gradle dependency
 - Kafka를 reactive하게 다룰 수 있는 driver를 제공한다 !
@@ -171,7 +171,7 @@ ReactiveX의 **Observable**, Project Reactor 등에서 말하는 **Flux** 의 �
 
 #### Producer
 
-<img src="./readmeImg/kafka/SpringReactiveKafka/Producer.png" alt="Producer" style="zoom:50%;" />
+<img src="./img/kafka/SpringReactiveKafka/Producer.png" alt="Producer" style="zoom:50%;" />
 
 ```java
 public Flux<SendResult<String>> produce (Publisher<String> publisher) {
@@ -195,7 +195,7 @@ send method는 publisher를 받는다. 즉, Mono, Flux를 받아드릴 수 있�
 
 #### Consumer
 
-<img src="./readmeImg/kafka/SpringReactiveKafka/Consumer.png" alt="Consumer" style="zoom:50%;" />
+<img src="./img/kafka/SpringReactiveKafka/Consumer.png" alt="Consumer" style="zoom:50%;" />
 
 ```java
 public Flux<ReceiverRecord<String,String>> consume() {
@@ -217,7 +217,7 @@ receive method를 호출하면서, Record 형태로 만들어진 Flux를 반환 
 
 2.3.0+ 이상부터 Reactor kafka를 사용할 수 있다.
 
-![SpringKafka](./readmeImg/kafka/SpringReactiveKafka/SpringKafka.png)
+![SpringKafka](./img/kafka/SpringReactiveKafka/SpringKafka.png)
 
 - Maven/Gradle Dependency
 
@@ -229,7 +229,7 @@ receive method를 호출하면서, Record 형태로 만들어진 Flux를 반환 
 
 #### Producer
 
-<img src="./readmeImg/kafka/SpringReactiveKafka/Producer.png" alt="Producer" style="zoom:50%;" />
+<img src="./img/kafka/SpringReactiveKafka/Producer.png" alt="Producer" style="zoom:50%;" />
 
 ```java
 public Flux<SendResult<Void>> produce (String topic, String message) {
@@ -244,7 +244,7 @@ ReactiveKafkaProducerTemplate<> 으로 만들어져서, send에 topic과 어떤 
 
 #### Consumer
 
-<img src="./readmeImg/kafka/SpringReactiveKafka/Consumer.png" alt="Consumer" style="zoom:50%;" />
+<img src="./img/kafka/SpringReactiveKafka/Consumer.png" alt="Consumer" style="zoom:50%;" />
 
 ```java
 public Flux<ReceiverRecord<String,String>> consume() {
@@ -263,7 +263,7 @@ Producer (프로듀서)는 보통 Kafka Producer api와 그것으로 구성된 �
 
 프로듀서가 전달하는 메시지 구조는 다음과 같다.
 
-<img src="./readmeImg/kafka/producer/message.png" alt="message" style="zoom:50%;" />
+<img src="./img/kafka/producer/message.png" alt="message" style="zoom:50%;" />
 
 - 토픽 (Topic)
 - 토픽 중 특정 파티션 위치 (Partition)
@@ -275,7 +275,7 @@ Producer (프로듀서)는 보통 Kafka Producer api와 그것으로 구성된 �
 
 ### Producer Message 전달 과정
 
-![procedure](./readmeImg/kafka/producer/procedure.png)
+![procedure](./img/kafka/producer/procedure.png)
 
 프로듀서는 메시지 전달 전 4 가지 과정을 통해 메시지를 브로커에 전달한다. 이는 **브로커에 메시지를 전송할수 있도록 변환 / 필요한 값을 지정해주는 작업** 이다.
 
