@@ -46,6 +46,7 @@ Computer Science Study ✏️
     - JPA
   - [Spring Cloud](./Spring%20Framework/Spring%20Cloud/README.md)
     - Open Feign
+    - Spring Cloud Netflix
 
 
 
