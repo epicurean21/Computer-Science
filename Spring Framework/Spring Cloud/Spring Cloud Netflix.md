@@ -110,4 +110,23 @@ API-Gateway는 사용자의 요청을 적절한 서비스로 프록시/라우팅
 ##### [API Gateway란?](https://velog.io/@youngerjesus/API-Gateway%EC%9D%98-%EC%9D%B4%ED%95%B4)
 
 > API Gateway는 모든 서버로의 요청을 단일지점을 거쳐서 처리하도록 한다. 이를 통해 공통된 로직 처리나 인증 및 인가 처리, 라우팅 처리등을 할 수 있다.
+>
+> 즉, API Gateway를 이용하면 통합적으로 endpoint와 REST API를 관리할수 있고, 모든 클라이언느는 각 서비스의 Endpoint 대신 API Gateway로 요청을 전달한다.
+
+
+
+Zuul은 Netflix OSS에서 제공하는 **api gateway의 구현체라고 보면된다.**
+
+<img src="./img/SpringCloudNetflix/zuul.png" alt="zuul" style="zoom:67%;" />
+
+Zuul은 최전방에서 클라이언트의 요청을 받아 적절한 서비스에 전달하고, 결과를 다시 클라이언트에 보내주는 엣지 서버 (edge server)이다.
+
+사용자에게 Zuul만 노출하고 다른 마이크로서비스의 종단점(Edge)을 숨기는 이유는 무엇일까? 
+
+- MSA 환경은 하나의 서비스에 여러 개의 서버가 존재할 수 있기 때문에 사용자에게 다수의 진입점(End Point)이 생겨난다.
+- 진입점이라면 인증과 보안, False request 등을 처리하는데 일부 진입점에 변경이 생기면 전체가 영향을 받기 때문에 관리가 까다롭다.
+
+그렇기에 Zuul을 활용해 도메인을 하나로 통합하고 단일 진입점으로 사용한다면 관리가 수월해진다.
+
+
 
