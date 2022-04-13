@@ -123,3 +123,9 @@ public class Team {
 
 > 데이터베이스 테이블의 다대일, 일대다 관계에서는 항상 **다** 쪽이 외래 키를 가집니다. 다 쪽인 `@ManyToOne`은 항상 연관관계의 주인이 되므로 `mappedBy`를 설정할 수 없습니다. 따라서 `@ManyToOne`에는 `mappedBy` 속성이 없습니다.
 
+
+
+
+### References
+
+- [[jpa] 연관관계 매핑 기초](https://joont92.github.io/jpa/%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84-%EB%A7%A4%ED%95%91-%EA%B8%B0%EC%B4%88/)
