@@ -252,23 +252,54 @@ Producer (프로듀서)는 보통 Kafka Producer api와 그것으로 구성된 �
 
 
 
+
+
+
+
+# Spring Kafka
+
+1. ### Consumer
+
+Consumer는 Kafka Cluster에서 저장된 데이터를 읽어오는 역할을 한다. 구현 방법은 두 가지가 존재한다.
+
+1. MessageListener
+
+2. @KafkaListener 
+
+
+
+2. ### KafkaListener
+
+@KafkaListener를 사용하면 config를 간결하게 설정할 수 있고, bean에 등록한 factory (ListenerContainerFactory)를 사용할 수 있다.
+
+
+
+KafkaConsumerConfig 설정을 보자
+
+```java
+@Configuration
+public class KafkaConsumerConfig {
+    
+}
+```
+
+
+
 ### Kafka 에서 재시도 (Retry) 처리
 
 *RetryTemplate* 을 사용하여 처리한다.
 
 - 재시도 시 얼마간의 deplay를 주고, 또 몇 번 재시도를 할지 설정을 담은 Template
 
-
-
 ```java
 @Bean
 private RetryTemplate retryTemplate() {
     RetryTemplate retryTemplate = new RetryTemplate();
-    
+
     FixedBackOffPolicy fixedBackOffPolicy = new FixedBackOffPolicy();
     fixedBackOffPolicy.setBackOffPeriod(1000L);
     retryTemplate.setBackOffPolicy(fixedBackOffPolicy);
-    
+
     SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy();
     retryPolicy.setMaxAttempts(2);
     retryTemplate.setRetryPolicy(retryPolicy);
@@ -285,12 +316,8 @@ private RetryTemplate retryTemplate() {
    
    - 위에서는 2번 재시도를 한다.
 
-
-
 Retry 기능을 사용하면 Listener 메소드는 `RetryingMessageListenerAdapter` 를 통해서 호출이 된다.
 
 ContainerFactory에 RetryTemplate / RecoveryCallback (callback은 optional) 을 설정하면 된다.
 
 [Spring-retry]([GitHub - spring-projects/spring-retry](https://github.com/spring-projects/spring-retry)) 를 봐보는것도 중요하다.
-
-
