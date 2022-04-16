@@ -248,14 +248,6 @@ Producer (프로듀서)는 보통 Kafka Producer api와 그것으로 구성된 �
 
 출처: https://always-kimkim.tistory.com/entry/kafka101-producer [언제나 김김]
 
-
-
-
-
-
-
-
-
 # Spring Kafka
 
 1. ### Consumer
@@ -266,24 +258,18 @@ Consumer는 Kafka Cluster에서 저장된 데이터를 읽어오는 역할을 �
 
 2. @KafkaListener 
 
-
-
-2. ### KafkaListener
+3. ### KafkaListener
 
 @KafkaListener를 사용하면 config를 간결하게 설정할 수 있고, bean에 등록한 factory (ListenerContainerFactory)를 사용할 수 있다.
-
-
 
 KafkaConsumerConfig 설정을 보자
 
 ```java
 @Configuration
 public class KafkaConsumerConfig {
-    
+
 }
 ```
-
-
 
 ### Kafka 에서 재시도 (Retry) 처리
 
