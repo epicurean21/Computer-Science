@@ -322,5 +322,3 @@ Native Query 에서의 성능 차이 역시 2 배가 넘게 난다.
 > JPQL 만큼은 아니지만, native query 역시 큰 차이를 보인다. 이것만 봐도 
 > 
 > parameter metadata max size 설정의 중요성을 알 수 있다. *(hibernate.query.plan_parameter_metadata_max_size)*
-
-
