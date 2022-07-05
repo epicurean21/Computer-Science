@@ -4,7 +4,7 @@ gRPC 를 실제 서비스에 사용하는 예제를 알아보자.
 
 gRPC에 대한 설명은 이곳에 있다.
 
-- [gRPC project](https://github.com/epicurean21/Spring-gRPC)
+- [gRPC project](https://github.com/epicurean21/Computer-Science/blob/master/Open%20Source%20Software/gRPC.md)
 
 예제를 알아보기 위해, 총 세 가지 다른 gRPC 자바 프로젝트를 만들어보자.
 
