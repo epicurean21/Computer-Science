@@ -214,3 +214,18 @@ com.myshop.catalog.application.category: 도메인 서비스 위치
 - 하지만 하나의 패키지로 무분별 하게 관리하면 불편함이 생긴다.
 
 - 저자 (최범균 님)은 최대 10~15개 정도의 타입 개수가 한 모듈에 위치하도록 한다.
+
+
+
+### 느낀점
+
+1. 코더와 개발자의 차이란..
+   - 무분별한 코드 작성이 아닌, 서비스 전체 구조와 도메인 영역에 대한 이해가 필요
+2. 패키지 구성의 장단점
+   - DDD 및 Clean Architecture (Hexagonal Architecture ![(질문)](https://wiki.linecorp.com/s/-7j4to5/8401/0f22f74a0c673511e48ab1bc7ae6af4388aa8dbf/_/images/icons/emoticons/help_16.svg))
+     
+     - MSA
+   
+   - controller, domain, service
+     
+     - 장점이 뭐지 ?
